@@ -1,0 +1,17 @@
+{
+    "name":"virtual-jonah2",
+    "version":"2.0.0",
+    "contributors": [
+	{
+	"name": "Eduardo Hideo Kuroda",
+	"email":  "eduardohideo at gmail com"
+	}
+    ],
+    "license":"GPL-3.0+",    
+    "devDependencies":{
+	"grunt":"~0.4.2",
+	"grunt-contrib-jshint": "~0.6.3",
+	"grunt-contrib-uglify": "~0.2.2",
+	"grunt-contrib-qunit": "~0.4.0"
+    }
+}
