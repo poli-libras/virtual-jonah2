@@ -1,13 +1,9 @@
-function Hand(shape,loc,arm_bones,hand_bone){
+function Upper_limbs(shape,arm_bones){
     this.shape = shape;
-    this.yaw = 0;
-    this.pitch = 0;
-    this.roll = 0;
-    this.loc = loc;
     this.arm_bones = arm_bones;
 }
 
-Hand.prototype.update_pose = function(){
+Upper_limbs.prototype.update_pose = function(){
     this.arm_bones.update_pose(yaw,pitch,roll,loc);
 };
 

@@ -1,6 +1,6 @@
 var up_arm,lo_arm,wrist;
 
-module("module hand",{
+module("module upper_limbs",{
 setup: function() {
     up_arm = {rot:{x:0,y:0,z:0}};
     lo_arm = {rot:{x:0,y:0,z:0}};
