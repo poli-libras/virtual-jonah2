@@ -6,7 +6,7 @@ module.exports = function(grunt){
 	},
 	uglify:{
 	    build:{
-	    src:'src/*.js',
+	    src:['src/*.js'],
 	    dest:'build/jonah.min.js'
 	    }
 	},
