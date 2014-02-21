@@ -10,28 +10,12 @@
 <body>
 	<div id="container" style="width:1000px; height:500px;"></div>
 	</div>
-<button onclick="console.log(action_upper_limbs.upper_limbs_left.arm_bones.wrist); console.log(action_upper_limbs.upper_limbs_left.arm_bones.lo_arm)">print on console</button>
-<br>
 <h3>POSITIONS</h3>
 <button onclick="action_upper_limbs.update_both(0,0,0,'ESPACO_NEUTRO');">ESPACO_NEUTRO</button>
 <button onclick="action_upper_limbs.update_both(0,0,0,'ORELHA');">ORELHA</button>
-<br>
-
-<h3>wrist</h3>
-x<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.wrist.x=this.value/75;">
-y<input type="range" value="0" min="-200" max="200"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.wrist.y=this.value/75;">
-z<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.wrist.z=this.value/75;">
-
-
-<h3>lo_arm_bone</h3>
-x<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.lo_arm.x=this.value/75;">
-y<input type="range" value="0" min="-200" max="200"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.lo_arm.y=this.value/75;">
-z<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.lo_arm.z=this.value/75;">
-
-<h3>up_arm_bone</h3>
-x<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.up_arm.x=this.value/75;">
-y<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.up_arm.y=this.value/75;">
-z<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.up_arm.z=this.value/75;">
-
+<button onclick="action_upper_limbs.update_both(0,0,-1,'ESPACO_NEUTRO');">ESPACO_NEUTRO_pitch_90</button>
+<button onclick="action_upper_limbs.update_both(0,0,-1,'ORELHA');">ORELHA_pitch_90</button>
+<h3>ANIMATION SPEED</h3>
+<input type="range" value="60" min="10" max="300"  onchange="action_upper_limbs.upper_limbs_left.arm_bones.animation_time=this.value; action_upper_limbs.upper_limbs_right.arm_bones.animation_time=this.value;">
 </body>
 </html>

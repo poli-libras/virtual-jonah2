@@ -38,10 +38,10 @@ Arm_bones.prototype.animation = function(){
     this.animation_bones(this.wrist,this.wrist_next,this.wrist_prev,time);
     this.animation_bones(this.up_arm,this.up_arm_next,this.up_arm_prev,time);
     if(time === 0){
-	this.animation_time_now = this.animation_time;
-	this.animation_end();
+        this.animation_time_now = this.animation_time;
+        this.animation_end();
     }else
-	this.animation_time_now -=1;
+        this.animation_time_now -=1;
     
 };
 
@@ -75,9 +75,14 @@ Arm_bones.prototype.update_pose = function(yaw,pitch,roll,loc){
 };
 
 Arm_bones.prototype.update_wrist = function(yaw,pitch,roll){
+ 
     this.wrist_next.x += yaw;
     this.wrist_next.y += pitch;
-    this.wrist_next.z += roll;
+    if(this.direction == "RIGHT")
+        this.wrist_next.z -= roll;
+    else
+        if(this.direction == "LEFT")
+            this.wrist_next.z += roll;
 };
 
 Arm_bones.prototype.update_loc = function(loc){
