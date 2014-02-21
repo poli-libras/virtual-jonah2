@@ -56,5 +56,6 @@ var rotate_camera = function(){
 function loop(){
     requestAnimationFrame(loop);
     //rotate_camera();
+    action_upper_limbs.animation();
     renderer.render(scene, camera);
 }
