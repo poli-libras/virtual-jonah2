@@ -18,12 +18,19 @@ Hand.prototype.open = function(){
 };
 
 Hand.prototype.close = function(){
-    this.index.close(this.direction);
-    this.middle.close(this.direction);
-    this.ring.close(this.direction);
-    this.pinky.close(this.direction);
+    this.index.close(0.1,0);
+    this.middle.close(0,0);
+    this.ring.close(-0.1,0);
+    this.pinky.close(-0.2,0);
 };
 
+Hand.prototype.rock = function(){
+    var rotation_value = -3.14/2.5;
+    this.index.close(0.1,rotation_value);
+    this.middle.close(0,rotation_value);
+    this.ring.close(-0.1,rotation_value);
+    this.pinky.close(-0.2,rotation_value);
+};
 
 Hand.prototype.animation = function(){
     var time = this.animation_time_now/this.animation_time;
@@ -38,31 +45,43 @@ Hand.prototype.animation = function(){
         this.animation_time_now -=1;
 };
 
-Hand.prototype.set_shape = function(shape){
-    if(shape == "MAO_FECHADA"){
-        this.close();
-    }
-    else
-        if(shape == "MAO_ABERTA"){
-            this.open();
-    }
+Hand.prototype.reset_animation = function(){
+    this.animation_time_now = this.animation_time;
 };
 
-function Finger(phalange1,phalange2,phalange3){
+Hand.prototype.set_shape = function(shape){
+    switch(shape)
+    {
+        case "MAO_FECHADA":
+            this.close();
+            break;
+        case "MAO_ABERTA":
+            this.open();
+            break;
+        case "PEDRA":
+            this.rock();
+    }
+    this.reset_animation();
+};
+
+function Finger(phalange1,phalange2,phalange3,direction){
     this.phalange1 = new Bone(phalange1);
     this.phalange2 = new Bone(phalange2);
     this.phalange3 = new Bone(phalange3);
+    this.direction = direction;
 }
 
-Finger.prototype.close = function(direction){
-    var rotation_value = -3.14/2.5;
-    if (direction == "RIGHT")
+Finger.prototype.close = function(angle,rotation){
+    var rotation_value = rotation;
+    var y = angle;
+    if (this.direction == "RIGHT"){
+        y *= -1;
         rotation_value *= -1;
-    this.phalange1.set_rotation(0,0,rotation_value);
+    }
+    this.phalange1.set_rotation(0,y,rotation_value);
     this.phalange2.set_rotation(0,0,rotation_value);
     this.phalange3.set_rotation(0,0,rotation_value);
 };
-
 
 Finger.prototype.open = function(){
     this.phalange1.set_rotation(0,0,0);

@@ -9,28 +9,28 @@ Action_upper_limbs.prototype.create_arm_bones = function(up_arm_index,lo_arm_ind
     return new Arm_bones(up_arm_left,lo_arm_left,wrist_left,direction);
 };
 
-Action_upper_limbs.prototype.create_finger = function(phalange1,phalange2,phalange3){
-    var bone1 = this.human_model.bones[phalange1].rotation;
-    var bone2 = this.human_model.bones[phalange2].rotation;
-    var bone3 = this.human_model.bones[phalange3].rotation;
-    return new Finger(bone1,bone2,bone3);
+Action_upper_limbs.prototype.create_finger = function(index_phalange1,index_phalange2,index_phalange3,direction){
+    var bone1 = this.human_model.bones[index_phalange1].rotation;
+    var bone2 = this.human_model.bones[index_phalange2].rotation;
+    var bone3 = this.human_model.bones[index_phalange3].rotation;
+    return new Finger(bone1,bone2,bone3,direction);
 };
 
 Action_upper_limbs.prototype.create_hand_left = function(){
-    var thumb = this.create_finger(48,49,50);
-    var index = this.create_finger(31,32,33);
-    var middle = this.create_finger(35,36,37);
-    var ring = this.create_finger(40,41,42);
-    var pinky = this.create_finger(44,45,46);
+    var thumb = this.create_finger(48,49,50,"LEFT");
+    var index = this.create_finger(31,32,33,"LEFT");
+    var middle = this.create_finger(35,36,37,"LEFT");
+    var ring = this.create_finger(40,41,42,"LEFT");
+    var pinky = this.create_finger(44,45,46,"LEFT");
     return new Hand(thumb,index,middle,ring,pinky,"LEFT");
 };
 
 Action_upper_limbs.prototype.create_hand_right = function(){
-    var thumb = this.create_finger(74,75,76);
-    var index = this.create_finger(57,58,59);
-    var middle = this.create_finger(61,62,63);
-    var ring = this.create_finger(66,67,68);
-    var pinky = this.create_finger(70,71,72);
+    var thumb = this.create_finger(74,75,76,"RIGHT");
+    var index = this.create_finger(57,58,59,"RIGHT");
+    var middle = this.create_finger(61,62,63,"RIGHT");
+    var ring = this.create_finger(66,67,68,"RIGHT");
+    var pinky = this.create_finger(70,71,72,"RIGHT");
     return new Hand(thumb,index,middle,ring,pinky,"RIGHT");
 };
 
