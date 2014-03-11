@@ -9,4 +9,3 @@ function load_model_json(model_file,callback){
     }
 
 }
-

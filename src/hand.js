@@ -5,16 +5,14 @@ function Hand(thumb, index, middle,ring,pinky,direction){
     this.ring = ring;
     this.pinky = pinky;
     this.direction = direction;
-    this.animation_time = 40;
-    this.animation_time_now = this.animation_time;
+    this.list_fingers = [this.thumb,this.index,this.middle,this.ring,this.pinky];
+    this.animation_bones = new Animation_bones(this.list_fingers,40);
 }
 
 Hand.prototype.open = function(){
-    this.thumb.open();
-    this.index.open();
-    this.middle.open();
-    this.ring.open();
-    this.pinky.open();
+    this.list_fingers.forEach(function(finger){
+        finger.open();
+    });
 };
 
 Hand.prototype.close = function(){
@@ -33,20 +31,7 @@ Hand.prototype.rock = function(){
 };
 
 Hand.prototype.animation = function(){
-    var time = this.animation_time_now/this.animation_time;
-    this.thumb.animation(time);
-    this.index.animation(time);
-    this.middle.animation(time);
-    this.ring.animation(time);
-    this.pinky.animation(time);
-    if(time === 0){
-        this.animation_time_now = this.animation_time;
-    }else
-        this.animation_time_now -=1;
-};
-
-Hand.prototype.reset_animation = function(){
-    this.animation_time_now = this.animation_time;
+    this.animation_bones.animation(); 
 };
 
 Hand.prototype.set_shape = function(shape){
@@ -61,13 +46,14 @@ Hand.prototype.set_shape = function(shape){
         case "PEDRA":
             this.rock();
     }
-    this.reset_animation();
+    this.animation_bones.reset_time();
 };
 
 function Finger(phalange1,phalange2,phalange3,direction){
     this.phalange1 = new Bone(phalange1);
     this.phalange2 = new Bone(phalange2);
     this.phalange3 = new Bone(phalange3);
+    this.phalange_list = [this.phalange1,this.phalange2,this.phalange3];
     this.direction = direction;
 }
 
@@ -84,13 +70,13 @@ Finger.prototype.close = function(angle,rotation){
 };
 
 Finger.prototype.open = function(){
-    this.phalange1.set_rotation(0,0,0);
-    this.phalange2.set_rotation(0,0,0);
-    this.phalange3.set_rotation(0,0,0);
+    this.phalange_list.forEach(function(phalange){
+        phalange.set_rotation(0,0,0);
+    });
 };
 
 Finger.prototype.animation = function(time){
-    this.phalange1.animation(time);
-    this.phalange2.animation(time);
-    this.phalange3.animation(time);
+    this.phalange_list.forEach(function(phalange){
+        phalange.animation(time);
+    });
 };
