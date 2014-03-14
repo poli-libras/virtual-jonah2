@@ -37,7 +37,7 @@ test("should_update_rotation_bone", function(){
 test("should_update_wrist", function(){
     var arm_bones = new Arm_bones(up_arm,lo_arm,wrist,direction);
     arm_bones.update_wrist(90,90,90);
-    deepEqual(arm_bones.wrist.rotation_next.toArray(),[90,90,90,"XYZ"]); 
+    deepEqual(arm_bones.wrist.rotation_next.toArray(),[-90,90,90,"XYZ"]); 
 });
 
 test("should_update_location", function(){

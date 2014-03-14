@@ -24,7 +24,7 @@ Action_upper_limbs.prototype.update_both = function(yaw,pitch,roll,loc){
     this.upper_limbs_left.update(yaw,pitch,roll,loc);
 };
 
-Action_upper_limbs.prototype.update_wrist = function(yaw,pitch,roll,loc){
+Action_upper_limbs.prototype.update_wrist = function(yaw,pitch,roll){
     this.upper_limbs_right.update_wrist(yaw,pitch,roll);
     this.upper_limbs_left.update_wrist(yaw,pitch,roll);
 };

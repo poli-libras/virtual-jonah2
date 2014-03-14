@@ -28,6 +28,7 @@ function Arm_bones(up_arm,lo_arm,wrist,direction){
     this.lo_arm = new Bone(lo_arm);
     this.wrist = new Bone(wrist);
     this.direction = direction;
+    this.loc = null;
     this.json_arm_left_pose={
         ESPACO_NEUTRO:{up:{x:-1.333,y:-1.333,z:-1.333},lo:{x:0,y:-0.1333,z:0},wrist:{x:0,y:0,z:1.33}},ORELHA:{up:{x:-1.33,y:0,z:0},lo:{x:0,y:-2,z:0},wrist:{x:0,y:0,z:0} }};
     this.json_arm_right_pose={
@@ -47,29 +48,29 @@ Arm_bones.prototype.update_pose = function(yaw,pitch,roll,loc){
 Arm_bones.prototype.update_wrist = function(yaw,pitch,roll){
     var x,y;
     var z = roll;
-    console.log(this.wrist.rotation.z);
-    if(this.wrist.rotation.z === 0){
-        y = yaw;
-        x = pitch;
+    if(this.loc == "ORELHA"){
+        x = yaw;
+        y = pitch;
     }else{
         y = yaw;
-        x = pitch;
+        x = -pitch;
         }
     if(this.direction == "RIGHT")
-        this.wrist.update_rotation(-yaw,pitch,-roll);
+        this.wrist.update_rotation(-x,y,-z);
     else
         if(this.direction == "LEFT")
-            this.wrist.update_rotation(yaw,pitch,roll);
+            this.wrist.update_rotation(x,y,z);
     this.animation_bones.reset_time();
 };
 
 Arm_bones.prototype.update_loc = function(loc){
+    this.loc = loc;
     var arm;
     if(this.direction == "RIGHT"){
-        arm = this.json_arm_right_pose[loc];
+        arm = this.json_arm_right_pose[this.loc];
     }else
         if(this.direction == "LEFT")
-            arm = this.json_arm_left_pose[loc];
+            arm = this.json_arm_left_pose[this.loc];
     this.update_arm(arm.up,arm.lo,arm.wrist);
     this.animation_bones.reset_time();
 };

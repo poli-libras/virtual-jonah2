@@ -19,8 +19,11 @@
 <button onclick="action_upper_limbs.set_shape('MAO_ABERTA');">MAO_ABERTA</button>
 <button onclick="action_upper_limbs.set_shape('PEDRA');">PEDRA</button>
 <h3>wrist control</h3>
-<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.update_wrist(this.value/100,0,0);">
-<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.update_wrist(0,this.value/100,0);">
-<input type="range" value="0" min="-100" max="100"  onchange="action_upper_limbs.update_wrist(0,0,this.value/100);">
+<button onclick="action_upper_limbs.update_wrist(-0.7,0,0);">x-</button>
+<button onclick="action_upper_limbs.update_wrist(0.7,0,0);">x+</button>
+<button onclick="action_upper_limbs.update_wrist(0,-0.7,0);">y-</button>
+<button onclick="action_upper_limbs.update_wrist(0,0.7,0);">y+</button>
+<button onclick="action_upper_limbs.update_wrist(0,0,-0.7);">z-</button>
+<button onclick="action_upper_limbs.update_wrist(0,0,0.7);">z+</button>
 </body>
 </html>
