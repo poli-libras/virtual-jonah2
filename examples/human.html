@@ -13,17 +13,20 @@
 <h3>POSITIONS</h3>
 <button onclick="action_upper_limbs.update_both(0,0,0,'ESPACO_NEUTRO');">ESPACO_NEUTRO</button>
 <button onclick="action_upper_limbs.update_both(0,0,0,'ORELHA');">ORELHA</button>
-<button onclick="action_upper_limbs.update_both(0,0,-1,'ESPACO_NEUTRO');">ESPACO_NEUTRO_pitch_90</button>
-<button onclick="action_upper_limbs.update_both(0,0,-1,'ORELHA');">ORELHA_pitch_90</button>
 <button onclick="action_upper_limbs.set_shape('MAO_FECHADA');">MAO_FECHADA</button>
 <button onclick="action_upper_limbs.set_shape('MAO_ABERTA');">MAO_ABERTA</button>
 <button onclick="action_upper_limbs.set_shape('PEDRA');">PEDRA</button>
 <h3>wrist control</h3>
-<button onclick="action_upper_limbs.update_wrist(-0.7,0,0);">x-</button>
-<button onclick="action_upper_limbs.update_wrist(0.7,0,0);">x+</button>
-<button onclick="action_upper_limbs.update_wrist(0,-0.7,0);">y-</button>
-<button onclick="action_upper_limbs.update_wrist(0,0.7,0);">y+</button>
-<button onclick="action_upper_limbs.update_wrist(0,0,-0.7);">z-</button>
-<button onclick="action_upper_limbs.update_wrist(0,0,0.7);">z+</button>
+direção da palma (esquerda/direita):
+<button onclick="action_upper_limbs.update_wrist(-0.7,0,0);">-</button>
+<button onclick="action_upper_limbs.update_wrist(0.7,0,0);">+</button>
+</br>
+plano (vertical/horizontal):
+<button onclick="action_upper_limbs.update_wrist(0,-0.7,0);">-</button>
+<button onclick="action_upper_limbs.update_wrist(0,0.7,0);">+</button>
+</br>
+orientacao (mão virada para o emissor/mão contra o emissor):
+<button onclick="action_upper_limbs.update_wrist(0,0,-0.7);">-</button>
+<button onclick="action_upper_limbs.update_wrist(0,0,0.7);">+</button>
 </body>
 </html>
