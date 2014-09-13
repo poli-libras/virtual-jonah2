@@ -54,7 +54,7 @@ Arm_bones.prototype.update_wrist = function(yaw,pitch,roll){
     }else{
         y = yaw;
         x = -pitch;
-        }
+    }
     if(this.direction == "RIGHT")
         this.wrist.update_rotation(-x,y,-z);
     else
