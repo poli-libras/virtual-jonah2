@@ -31,9 +31,9 @@ this.vj2 = this.vj2||{};
         });
     };
 
-    p.animation = function(time){
+    p.interpolate = function(factor){
         this.phalange_list.forEach(function(phalange){
-            phalange.animation(time);
+            phalange.interpolate(factor);
         });
     };
 

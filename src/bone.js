@@ -32,9 +32,9 @@ this.vj2 = this.vj2||{};
         this.rotation_next.z = z;
     };
 
-    p.animation = function(time){
-        THREE.Quaternion.slerp(this.rotation_next._quaternion,this.rotation_prev._quaternion,this.rotation._quaternion,time);
-        if(time === 0)
+    p.interpolate = function(factor){
+        THREE.Quaternion.slerp(this.rotation_next._quaternion,this.rotation_prev._quaternion,this.rotation._quaternion,factor);
+        if(factor === 0)
             this.update_rotation_prev();
     };
 
