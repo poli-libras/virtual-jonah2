@@ -20,7 +20,6 @@ this.vj2 = this.vj2||{};
         this.arm_bones.update_wrist(yaw,pitch,roll);
     };
 
-
     p.update_wrist = function(yaw,pitch,roll){
         this.arm_bones.update_wrist(yaw,pitch,roll);
     };

@@ -5,41 +5,39 @@ this.vj2 = this.vj2||{};
 
     function Bone(rotation){
         this.rotation = rotation;
-        this.rotation_next = this.clone_rotation(rotation);
-        this.rotation_prev = this.clone_rotation(rotation);
+
+        this.quaternion_next = new THREE.Quaternion().setFromEuler(rotation);
+        this.quaternion_prev = new THREE.Quaternion().setFromEuler(rotation);
+
+        this.eulerHelper = new THREE.Euler(0,0,0);
     }
 
     var p = Bone.prototype;
 
-    p.clone_rotation = function(rotation){
-        // Euler angle - represents the orientation of the bone in the 3D space
-        var clone = new THREE.Euler(0,0,0,"XYZ");
-        var quaternion_rotation = new THREE.Quaternion().setFromEuler(rotation);
-        clone.copy(rotation);
-        clone._quaternion = quaternion_rotation;
-        return clone;
-    };
-
     p.update_rotation = function(x,y,z){
-        this.rotation_next.x += x;
-        this.rotation_next.y += y;
-        this.rotation_next.z += z;
+        this.eulerHelper.setFromQuaternion(this.quaternion_next);
+
+        this.eulerHelper.x += x;
+        this.eulerHelper.y += y;
+        this.eulerHelper.z += z;
+
+        this.quaternion_next.setFromEuler(this.eulerHelper);
     };
 
     p.set_rotation = function(x,y,z){
-        this.rotation_next.x = x;
-        this.rotation_next.y = y;
-        this.rotation_next.z = z;
+        this.eulerHelper.set(x,y,z);
+        this.quaternion_next.setFromEuler(this.eulerHelper);
     };
 
     p.interpolate = function(factor){
-        THREE.Quaternion.slerp(this.rotation_next._quaternion,this.rotation_prev._quaternion,this.rotation._quaternion,factor);
+        THREE.Quaternion.slerp(this.quaternion_next, this.quaternion_prev,
+                this.rotation._quaternion, factor);
         if(factor === 0)
             this.update_rotation_prev();
     };
 
     p.update_rotation_prev = function(){
-        this.rotation_prev = this.clone_rotation(this.rotation_next);
+        this.quaternion_prev.copy(this.quaternion_next);
     };
 
     vj2.Bone = Bone;
