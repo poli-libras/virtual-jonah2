@@ -16,16 +16,18 @@ this.vj2 = this.vj2||{};
         this.animation_bones = new vj2.Animation_bones([this.up_arm,this.lo_arm,this.wrist],40);
     }
 
-    Arm_bones.prototype.animation = function(){
+    var p = Arm_bones.prototype;
+
+    p.animation = function(){
         this.animation_bones.animation();
     };
 
-    Arm_bones.prototype.update_pose = function(yaw,pitch,roll,loc){
+    p.update_pose = function(yaw,pitch,roll,loc){
         this.update_loc(loc);
         this.update_wrist(yaw,pitch,roll);
     };
 
-    Arm_bones.prototype.update_wrist = function(yaw,pitch,roll){
+    p.update_wrist = function(yaw,pitch,roll){
         var x,y;
         var z = roll;
         if(this.loc == "ORELHA"){
@@ -43,7 +45,7 @@ this.vj2 = this.vj2||{};
         this.animation_bones.reset_time();
     };
 
-    Arm_bones.prototype.update_loc = function(loc){
+    p.update_loc = function(loc){
         this.loc = loc;
         var arm;
         if(this.direction == "RIGHT"){
@@ -55,7 +57,7 @@ this.vj2 = this.vj2||{};
         this.animation_bones.reset_time();
     };
 
-    Arm_bones.prototype.update_arm = function(up_arm_rot,lo_arm_rot,wrist){
+    p.update_arm = function(up_arm_rot,lo_arm_rot,wrist){
         this.up_arm.set_rotation(up_arm_rot.x,up_arm_rot.y,up_arm_rot.z);
         this.lo_arm.set_rotation(lo_arm_rot.x,lo_arm_rot.y,lo_arm_rot.z);
         this.wrist.set_rotation(wrist.x,wrist.y,wrist.z);
