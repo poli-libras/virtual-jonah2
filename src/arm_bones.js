@@ -13,13 +13,13 @@ this.vj2 = this.vj2||{};
             ESPACO_NEUTRO:{up:{x:-1.333,y:-1.333,z:-1.333},lo:{x:0,y:-0.1333,z:0},wrist:{x:0,y:0,z:1.33}},ORELHA:{up:{x:-1.33,y:0,z:0},lo:{x:0,y:-2,z:0},wrist:{x:0,y:0,z:0} }};
         this.json_arm_right_pose={
             ESPACO_NEUTRO:{up:{x:1.333,y:1.333,z:-1.333},lo:{x:0,y:0.1333,z:0},wrist:{x:0,y:0,z:-1.33}},ORELHA:{up:{x:-1.33,y:0,z:0},lo:{x:0,y:2,z:0},wrist:{x:0,y:0,z:0} } };
-        this.animation_bones = new vj2.Animation_bones([this.up_arm,this.lo_arm,this.wrist],40);
+        this.animation_bones = new vj2.Animation_bones([this.up_arm,this.lo_arm,this.wrist],1.5);
     }
 
     var p = Arm_bones.prototype;
 
-    p.animation = function(){
-        this.animation_bones.animation();
+    p.animation = function(dt){
+        this.animation_bones.animation(dt);
     };
 
     p.update_pose = function(yaw,pitch,roll,loc){

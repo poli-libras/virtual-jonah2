@@ -11,7 +11,7 @@ this.vj2 = this.vj2||{};
         this.pinky = pinky;
         this.direction = direction;
         this.list_fingers = [this.thumb,this.index,this.middle,this.ring,this.pinky];
-        this.animation_bones = new vj2.Animation_bones(this.list_fingers,40);
+        this.animation_bones = new vj2.Animation_bones(this.list_fingers,1.5);
     }
 
     var p = Hand.prototype;
@@ -37,8 +37,8 @@ this.vj2 = this.vj2||{};
         this.pinky.close(-0.2,rotation_value);
     };
 
-    p.animation = function(){
-        this.animation_bones.animation(); 
+    p.animation = function(dt){
+        this.animation_bones.animation(dt); 
     };
 
     p.set_shape = function(shape){

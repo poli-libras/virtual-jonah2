@@ -18,6 +18,8 @@ var clock = new THREE.Clock();
 var scene,renderer;
 var action_upper_limbs;
 
+var last_frame_time = 0;
+
 function init(){
 
     var container = $('#container');
@@ -42,6 +44,7 @@ function create_animation(human){
     scene.add(human);
     action_upper_limbs = new vj2.Action_upper_limbs(human);
     action_upper_limbs.create_upper_limbs();
+    last_frame_time = Date.now();
     loop();
 }
 
@@ -56,6 +59,10 @@ var rotate_camera = function(){
 function loop(){
     requestAnimationFrame(loop);
     //rotate_camera();
-    action_upper_limbs.animation();
+    var dt = Date.now() - last_frame_time;
+
+    action_upper_limbs.animation(dt/1000);
     renderer.render(scene, camera);
+
+    last_frame_time = Date.now();
 }

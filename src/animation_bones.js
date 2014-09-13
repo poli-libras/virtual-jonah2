@@ -11,10 +11,9 @@ this.vj2 = this.vj2||{};
 
     var p = Animation_bones.prototype;
 
-    p.animation = function(){
-        var time = this.time_now/this.animation_time;
-        this.map_animation(time);
-        this.run_time(time);
+    p.animation = function(dt){
+        this.map_animation(this.time_now/this.animation_time);
+        this.run_time(dt);
     };
 
     p.map_animation = function(time){
@@ -23,9 +22,9 @@ this.vj2 = this.vj2||{};
         });
     };
 
-    p.run_time = function(time){
-        if(time > 0){
-            this.time_now -=1;
+    p.run_time = function(dt){
+        if(this.time_now > 0){
+            this.time_now -= dt;
         }else
             this.reset_time();
     };

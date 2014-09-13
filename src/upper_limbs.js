@@ -25,9 +25,9 @@ this.vj2 = this.vj2||{};
         this.arm_bones.update_wrist(yaw,pitch,roll);
     };
 
-    p.animation = function(){
-        this.arm_bones.animation();
-        this.hand.animation();
+    p.animation = function(dt){
+        this.arm_bones.animation(dt);
+        this.hand.animation(dt);
     };
 
     vj2.Upper_limbs = Upper_limbs;

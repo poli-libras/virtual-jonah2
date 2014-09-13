@@ -41,9 +41,9 @@ this.vj2 = this.vj2||{};
         this.upper_limbs_left.set_shape(shape);
     };
 
-    p.animation = function(){
-        this.upper_limbs_right.animation();
-        this.upper_limbs_left.animation();
+    p.animation = function(dt){
+        this.upper_limbs_right.animation(dt);
+        this.upper_limbs_left.animation(dt);
     };
 
     p.create_arm_bones = function(up_arm_index,lo_arm_index,wrist_index,direction){
