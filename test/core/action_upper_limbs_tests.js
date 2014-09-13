@@ -4,7 +4,7 @@ asyncTest("should update upper_limbs",function(){
     load_model_json("../resources/model/human.js",check_upper_limbs);
     function check_upper_limbs(human_model){
 	ok(human_model);
-	var action_upper_limbs = new Action_upper_limbs(human_model);
+	var action_upper_limbs = new vj2.Action_upper_limbs(human_model);
 	action_upper_limbs.create_upper_limbs();
 	action_upper_limbs.update_left(0,0,0,"ORELHA");
 	equal(human_model.bones[26].rotation.x,0);

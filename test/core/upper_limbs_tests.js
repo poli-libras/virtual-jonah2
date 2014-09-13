@@ -5,7 +5,7 @@ setup: function() {
     up_arm = new THREE.Euler(0,0,0,"XYZ");
     lo_arm = new THREE.Euler(0,0,0,"XYZ");
     wrist =  new THREE.Euler(0,0,0,"XYZ");
-    bone_up_arm = new Bone(up_arm);
+    bone_up_arm = new vj2.Bone(up_arm);
     direction = "LEFT";
 }});
 
@@ -35,13 +35,13 @@ test("should_update_rotation_bone", function(){
 });
 
 test("should_update_wrist", function(){
-    var arm_bones = new Arm_bones(up_arm,lo_arm,wrist,direction);
+    var arm_bones = new vj2.Arm_bones(up_arm,lo_arm,wrist,direction);
     arm_bones.update_wrist(90,90,90);
     deepEqual(arm_bones.wrist.rotation_next.toArray(),[-90,90,90,"XYZ"]); 
 });
 
 test("should_update_location", function(){
-    var arm_bones = new Arm_bones(up_arm,lo_arm,wrist,direction);
+    var arm_bones = new vj2.Arm_bones(up_arm,lo_arm,wrist,direction);
     arm_bones.update_loc("ORELHA");
     deepEqual(arm_bones.up_arm.rotation_next.toArray(),[-1.33,0,0,"XYZ"]); 
     deepEqual(arm_bones.lo_arm.rotation_next.toArray(),[0,-2,0,"XYZ"]); 
