@@ -12,21 +12,14 @@ this.vj2 = this.vj2||{};
     var p = Animation_bones.prototype;
 
     p.animation = function(dt){
-        this.map_animation(this.time_now/this.animation_time);
-        this.run_time(dt);
+        this.interpolate_bones(this.time_now/this.animation_time);
+        this.time_now -= Math.min(dt, this.time_now);
     };
 
-    p.map_animation = function(time){
+    p.interpolate_bones = function(factor){
         this.list_bones.forEach(function(bone){
-            bone.animation(time);
+            bone.interpolate(factor);
         });
-    };
-
-    p.run_time = function(dt){
-        if(this.time_now > 0){
-            this.time_now -= dt;
-        }else
-            this.reset_time();
     };
 
     p.reset_time = function(){
