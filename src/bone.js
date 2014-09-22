@@ -3,11 +3,11 @@ this.vj2 = this.vj2||{};
 (function () {
     "use strict";
 
-    function Bone(rotation){
-        this.rotation = rotation;
+    function Bone(quaternion){
+        this.quaternion = quaternion;
 
-        this.quaternion_next = new THREE.Quaternion().setFromEuler(rotation);
-        this.quaternion_prev = new THREE.Quaternion().setFromEuler(rotation);
+        this.quaternion_next = quaternion.clone();
+        this.quaternion_prev = quaternion.clone();
 
         this.eulerHelper = new THREE.Euler(0,0,0);
     }
@@ -31,7 +31,7 @@ this.vj2 = this.vj2||{};
 
     p.interpolate = function(factor){
         THREE.Quaternion.slerp(this.quaternion_next, this.quaternion_prev,
-                this.rotation._quaternion, factor);
+                this.quaternion, factor);
         if(factor === 0)
             this.update_rotation_prev();
     };

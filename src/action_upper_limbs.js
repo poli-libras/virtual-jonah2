@@ -47,9 +47,9 @@ this.vj2 = this.vj2||{};
     };
 
     p.create_arm_bones = function(up_arm_index,lo_arm_index,wrist_index,direction){
-        var up_arm_left = this.human_model.bones[up_arm_index].rotation;
-        var lo_arm_left = this.human_model.bones[lo_arm_index].rotation;
-        var wrist_left = this.human_model.bones[wrist_index].rotation;
+        var up_arm_left = this.human_model.skeleton.bones[up_arm_index].quaternion;
+        var lo_arm_left = this.human_model.skeleton.bones[lo_arm_index].quaternion;
+        var wrist_left = this.human_model.skeleton.bones[wrist_index].quaternion;
         return new vj2.Arm_bones(up_arm_left,lo_arm_left,wrist_left,direction);
     };
 
@@ -72,9 +72,9 @@ this.vj2 = this.vj2||{};
     };
 
     p.create_finger = function(index_phalange1,index_phalange2,index_phalange3,direction){
-        var bone1 = this.human_model.bones[index_phalange1].rotation;
-        var bone2 = this.human_model.bones[index_phalange2].rotation;
-        var bone3 = this.human_model.bones[index_phalange3].rotation;
+        var bone1 = this.human_model.skeleton.bones[index_phalange1].quaternion;
+        var bone2 = this.human_model.skeleton.bones[index_phalange2].quaternion;
+        var bone3 = this.human_model.skeleton.bones[index_phalange3].quaternion;
         return new vj2.Finger(bone1,bone2,bone3,direction);
     };
 
