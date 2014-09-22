@@ -11,7 +11,6 @@ this.vj2 = this.vj2||{};
         this.pinky = pinky;
         this.direction = direction;
         this.list_fingers = [this.thumb,this.index,this.middle,this.ring,this.pinky];
-        this.animation_bones = new vj2.Animation_bones(this.list_fingers,1.5);
     }
 
     var p = Hand.prototype;
@@ -38,7 +37,9 @@ this.vj2 = this.vj2||{};
     };
 
     p.animation = function(dt){
-        this.animation_bones.animation(dt); 
+        this.list_fingers.forEach(function(finger){
+            finger.animation(dt);
+        });
     };
 
     p.set_shape = function(shape){
@@ -53,7 +54,6 @@ this.vj2 = this.vj2||{};
             case "PEDRA":
                 this.rock();
         }
-        this.animation_bones.reset_time();
     };
 
     vj2.Hand = Hand;
