@@ -3,16 +3,18 @@ this.vj2 = this.vj2||{};
 (function () {
     "use strict";
 
-    function Bone(quaternion){
+    function Animated_bone(quaternion, duration){
         this.quaternion = quaternion;
-
         this.quaternion_next = quaternion.clone();
         this.quaternion_prev = quaternion.clone();
 
         this.eulerHelper = new THREE.Euler(0,0,0);
+
+        this.duration = duration;
+        this.current_time = duration;
     }
 
-    var p = Bone.prototype;
+    var p = Animated_bone.prototype;
 
     p.update_rotation = function(x,y,z){
         this.eulerHelper.setFromQuaternion(this.quaternion_next);
@@ -29,6 +31,11 @@ this.vj2 = this.vj2||{};
         this.quaternion_next.setFromEuler(this.eulerHelper);
     };
 
+    p.update = function(dt){
+        this.interpolate(this.current_time/this.duration);
+        this.current_time -= Math.min(dt, this.current_time);
+    };
+
     p.interpolate = function(factor){
         THREE.Quaternion.slerp(this.quaternion_next, this.quaternion_prev,
                 this.quaternion, factor);
@@ -40,5 +47,9 @@ this.vj2 = this.vj2||{};
         this.quaternion_prev.copy(this.quaternion_next);
     };
 
-    vj2.Bone = Bone;
+    p.reset_animation = function(){
+        this.current_time = this.duration;
+    };
+
+    vj2.Animated_bone = Animated_bone;
 }());
