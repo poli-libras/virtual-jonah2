@@ -8,22 +8,19 @@ this.vj2 = this.vj2||{};
         this.quaternion_next = quaternion.clone();
         this.quaternion_prev = quaternion.clone();
 
-        this.eulerHelper = new THREE.Euler(0,0,0);
-
         this.duration = duration;
         this.current_time = duration;
+
+        this.eulerHelper = new THREE.Euler(0,0,0);
+        this.quaternionHelper = new THREE.Quaternion(0,0,0);
     }
 
     var p = Animated_bone.prototype;
 
     p.update_rotation = function(x,y,z){
-        this.eulerHelper.setFromQuaternion(this.quaternion_next);
-
-        this.eulerHelper.x += x;
-        this.eulerHelper.y += y;
-        this.eulerHelper.z += z;
-
-        this.quaternion_next.setFromEuler(this.eulerHelper);
+        this.eulerHelper.set(x,y,z);
+        this.quaternionHelper.setFromEuler(this.eulerHelper);
+        this.quaternion_next.multiply(this.quaternionHelper);
     };
 
     p.set_rotation = function(x,y,z){
