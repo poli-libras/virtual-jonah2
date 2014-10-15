@@ -13,6 +13,7 @@ this.vj2 = this.vj2||{};
 
         this.eulerHelper = new THREE.Euler(0,0,0);
         this.quaternionHelper = new THREE.Quaternion(0,0,0);
+        this.done = true;
     }
 
     var p = Animated_bone.prototype;
@@ -21,11 +22,15 @@ this.vj2 = this.vj2||{};
         this.eulerHelper.set(x,y,z);
         this.quaternionHelper.setFromEuler(this.eulerHelper);
         this.quaternion_next.multiply(this.quaternionHelper);
+        this.current_time = this.duration;
+        this.done = false;
     };
 
     p.set_rotation = function(x,y,z){
         this.eulerHelper.set(x,y,z);
         this.quaternion_next.setFromEuler(this.eulerHelper);
+        this.current_time = this.duration;
+        this.done = false;
     };
 
     p.update = function(dt){
@@ -42,6 +47,7 @@ this.vj2 = this.vj2||{};
 
     p.update_rotation_prev = function(){
         this.quaternion_prev.copy(this.quaternion_next);
+        this.done = true;
     };
 
     p.reset_animation = function(){

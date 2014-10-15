@@ -16,6 +16,15 @@ this.vj2 = this.vj2||{};
         var hand_right = this.create_hand("RIGHT");
         this.upper_limbs_left= new vj2.Upper_limbs(hand_left,arm_bones_left,"LEFT");
         this.upper_limbs_right= new vj2.Upper_limbs(hand_right,arm_bones_right,"RIGHT");
+
+        this.locations = null;
+        this.current_location = "DEFAULT";
+        this.bones_moving = [];
+        load_json("/src/locations.json", (function(self) {
+            return function(obj) {
+                self.locations = obj;
+            };
+        }(this)));
     };
 
     p.update_left = function(yaw,pitch,roll,loc){
@@ -27,8 +36,7 @@ this.vj2 = this.vj2||{};
     };
 
     p.update_both = function(yaw,pitch,roll,loc){
-        this.upper_limbs_right.update(yaw,pitch,roll,loc);
-        this.upper_limbs_left.update(yaw,pitch,roll,loc);
+        this.move_to_location(loc);
     };
 
     p.update_wrist = function(yaw,pitch,roll){
@@ -42,8 +50,19 @@ this.vj2 = this.vj2||{};
     };
 
     p.animation = function(dt){
-        this.upper_limbs_right.animation(dt);
-        this.upper_limbs_left.animation(dt);
+        /*this.upper_limbs_right.animation(dt);
+        this.upper_limbs_left.animation(dt);*/
+
+        var removed_bones = [];
+        for(var i = 0; i < this.bones_moving.length; i++)
+        {
+            var b = this.bones_moving[i];
+            b.update(dt);
+            if(b.done) removed_bones.push(i);
+        }
+
+        for (var j = 0; j < removed_bones.length; j++)
+            this.bones_moving.splice(removed_bones[j], 1);
     };
 
     p.get_bone = function(bone_name){
@@ -51,6 +70,34 @@ this.vj2 = this.vj2||{};
         for(var i = 0; i < bones.length; i++)
             if(bones[i].name == bone_name)
                 return bones[i];
+    };
+
+    p.animated_bone_pool = {};
+    p.create_animated_bone = function(name, time)
+    {
+        if(this.animated_bone_pool[name] !== undefined)
+        {
+            return this.animated_bone_pool[name];
+        }
+        else
+        {
+            this.animated_bone_pool[name] = new vj2.Animated_bone(this.get_bone(name).quaternion, time);
+            return this.animated_bone_pool[name];
+        }
+    };
+
+    p.move_to_location = function(location_name){
+        if(this.locations !== null)
+        {
+            var loc = this.locations[location_name];
+            for(var s in loc)
+            {
+                var anim_bone = this.create_animated_bone(s, 1.5);
+                if(anim_bone.done)
+                    this.bones_moving.push(anim_bone); 
+                anim_bone.set_rotation(loc[s].x,loc[s].y,loc[s].z);
+            }
+        }
     };
 
     p.create_arm_bones = function(direction){
