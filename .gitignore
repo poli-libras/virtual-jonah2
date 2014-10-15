@@ -1,3 +1,6 @@
 .DS_Store
 *.swp
 node_modules/*
+resources/model/blender/
+resources/model/makehuman-export/
+todo
