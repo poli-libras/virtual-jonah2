@@ -15,13 +15,21 @@ this.vj2 = this.vj2||{};
         this.hand.set_shape(shape);
     };
 
-    p.update = function(yaw,pitch,roll,loc){
+    p.update = function(roll,yaw,pitch,loc){
         this.arm_bones.update_loc(loc);
-        this.arm_bones.update_wrist(yaw,pitch,roll);
+        this.arm_bones.update_wrist(roll,yaw,pitch);
     };
 
-    p.update_wrist = function(yaw,pitch,roll){
-        this.arm_bones.update_wrist(yaw,pitch,roll);
+    p.update_wrist = function(roll,yaw,pitch){
+        this.arm_bones.update_wrist(roll,yaw,pitch);
+    };
+
+    p.update_uparm = function(roll,yaw,pitch){
+        this.arm_bones.update_uparm(roll,yaw,pitch);
+    };
+
+    p.update_loarm = function(roll,yaw,pitch){
+        this.arm_bones.update_loarm(roll,yaw,pitch);
     };
 
     p.animation = function(dt){

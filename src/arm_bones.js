@@ -4,15 +4,10 @@ this.vj2 = this.vj2||{};
     "use strict";
 
     function Arm_bones(up_arm,lo_arm,wrist,direction){
-        this.up_arm = new vj2.Animated_bone(up_arm, 1.5);
-        this.lo_arm = new vj2.Animated_bone(lo_arm, 1.5);
-        this.wrist = new vj2.Animated_bone(wrist, 1.5);
+        this.up_arm = new vj2.Animated_bone(up_arm, 0.1);
+        this.lo_arm = new vj2.Animated_bone(lo_arm, 0.1);
+        this.wrist = new vj2.Animated_bone(wrist, 0.1);
         this.direction = direction;
-        this.loc = null;
-        this.json_arm_left_pose={
-            ESPACO_NEUTRO:{up:{x:-1.333,y:-1.333,z:-1.333},lo:{x:0,y:-0.1333,z:0},wrist:{x:0,y:0,z:1.33}},ORELHA:{up:{x:-1.33,y:0,z:0},lo:{x:0,y:-2,z:0},wrist:{x:0,y:0,z:0} }};
-        this.json_arm_right_pose={
-            ESPACO_NEUTRO:{up:{x:1.333,y:1.333,z:-1.333},lo:{x:0,y:0.1333,z:0},wrist:{x:0,y:0,z:-1.33}},ORELHA:{up:{x:-1.33,y:0,z:0},lo:{x:0,y:2,z:0},wrist:{x:0,y:0,z:0} } };
     }
 
     var p = Arm_bones.prototype;
@@ -23,40 +18,39 @@ this.vj2 = this.vj2||{};
         this.wrist.update(dt);
     };
 
-    p.update_pose = function(yaw,pitch,roll,loc){
+    p.update_pose = function(roll,yaw,pitch,loc){
         this.update_loc(loc);
-        this.update_wrist(yaw,pitch,roll);
+        this.update_wrist(roll,yaw,pitch);
     };
 
-    p.update_wrist = function(yaw,pitch,roll){
-        var x,y;
-        var z = roll;
-        //if(this.loc == "ORELHA"){
-            x = yaw;
-            y = pitch;
-        //}else{
-        //    y = yaw;
-        //    x = -pitch;
-        //}
-        if(this.direction == "RIGHT")
-            this.wrist.update_rotation(-x,y,-z);
-        else
-            if(this.direction == "LEFT")
-                this.wrist.update_rotation(x,y,z);
+    p.update_wrist = function(roll,yaw,pitch){
+        //if(this.direction == "RIGHT")
+        //    this.wrist.update_rotation(-roll,yaw,-pitch);
+        //else
+        //    if(this.direction == "LEFT")
+                this.wrist.update_rotation(roll,yaw,pitch);
         this.up_arm.reset_animation();
         this.lo_arm.reset_animation();
         this.wrist.reset_animation();
     };
 
-    p.update_loc = function(loc){
-        this.loc = loc;
-        var arm;
-        if(this.direction == "RIGHT"){
-            arm = this.json_arm_right_pose[this.loc];
-        }else
-            if(this.direction == "LEFT")
-                arm = this.json_arm_left_pose[this.loc];
-        this.update_arm(arm.up,arm.lo,arm.wrist);
+    p.update_uparm = function(roll,yaw,pitch){
+        //if(this.direction == "RIGHT")
+        //    this.wrist.update_rotation(-roll,yaw,-pitch);
+        //else
+        //    if(this.direction == "LEFT")
+                this.up_arm.update_rotation(roll,yaw,pitch);
+        this.up_arm.reset_animation();
+        this.lo_arm.reset_animation();
+        this.wrist.reset_animation();
+    };
+
+    p.update_loarm = function(roll,yaw,pitch){
+        //if(this.direction == "RIGHT")
+        //    this.wrist.update_rotation(-roll,yaw,-pitch);
+        //else
+        //    if(this.direction == "LEFT")
+                this.lo_arm.update_rotation(roll,yaw,pitch);
         this.up_arm.reset_animation();
         this.lo_arm.reset_animation();
         this.wrist.reset_animation();
