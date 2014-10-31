@@ -7,27 +7,90 @@
 	<script src="../resources/three.min.js"></script>
 	<script src="human.js"></script>
 	<script type="text/javascript" src="../build/jonah.min.js"></script>
+    <style>
+        .controls {
+            width:140px;
+            padding-right:20px;
+            float:left;
+        }
+        .controls button {
+            float: right;
+        }
+        .controls span {
+            float: left;
+        }
+        .clear {
+            clear:both;
+        }
+    </style>
 </head>
-<body>
-	<div id="container" style="width:1000px; height:500px;"></div>
-	</div>
-<h3>POSITIONS</h3>
-<button onclick="action_upper_limbs.update_both(0,0,0,'ESPACO_NEUTRO');">ESPACO_NEUTRO</button>
-<button onclick="action_upper_limbs.update_both(0,0,0,'ORELHA');">ORELHA</button>
-<button onclick="action_upper_limbs.set_shape('MAO_FECHADA');">MAO_FECHADA</button>
-<button onclick="action_upper_limbs.set_shape('MAO_ABERTA');">MAO_ABERTA</button>
-<button onclick="action_upper_limbs.set_shape('PEDRA');">PEDRA</button>
-<h3>wrist control</h3>
-ROLL
-<button onclick="action_upper_limbs.update_wrist(-1.57, 0,0);">-</button>
-<button onclick="action_upper_limbs.update_wrist(1.57,0,0);">+</button>
-</br>
-YAW
-<button onclick="action_upper_limbs.update_wrist(0,-1.57,0);">-</button>
-<button onclick="action_upper_limbs.update_wrist(0,1.57,0);">+</button>
-</br>
-PITCH
-<button onclick="action_upper_limbs.update_wrist(0,0,-1.57);">-</button>
-<button onclick="action_upper_limbs.update_wrist(0,0,1.57);">+</button>
-</body>
+    <body>
+        <div id="container" style="width:1000px; height:500px;"></div>
+        <div>
+            <h3>Locations</h3>
+            <button onclick="action_upper_limbs.set_location('DEFAULT');">DEFAULT</button>
+            <button onclick="action_upper_limbs.set_location('ESPACO_NEUTRO');">ESPACO NEUTRO</button>
+            <button onclick="action_upper_limbs.set_location('ORELHA');">ORELHA</button>
+            <button onclick="action_upper_limbs.set_location('OMBRO_ESQUERDO');">OMBRO ESQUERDO</button>
+        </div>
+        <!--
+        <div>
+            <h3>Shapes</h3>
+            <button onclick="action_upper_limbs.set_shape('MAO_FECHADA');">MAO_FECHADA</button>
+            <button onclick="action_upper_limbs.set_shape('MAO_ABERTA');">MAO_ABERTA</button>
+            <button onclick="action_upper_limbs.set_shape('PEDRA');">PEDRA</button>
+        </div>
+        <div class="controls">
+            <h3>wrist control</h3>
+            <span>ROLL</span>
+            <button onclick="action_upper_limbs.update_wrist(-1.57, 0,0);">-</button>
+            <button onclick="action_upper_limbs.update_wrist(1.57,0,0);">+</button>
+            </br>
+            <div class="clear"></div>
+            <span>YAW</span>
+            <button onclick="action_upper_limbs.update_wrist(0,-1.57,0);">-</button>
+            <button onclick="action_upper_limbs.update_wrist(0,1.57,0);">+</button>
+            </br>
+            <div class="clear"></div>
+            <span>PITCH</span>
+            <button onclick="action_upper_limbs.update_wrist(0,0,-1.57);">-</button>
+            <button onclick="action_upper_limbs.update_wrist(0,0,1.57);">+</button>
+            <div class="clear"></div>
+        </div>
+        <div class="controls">
+            <h3>uparm control</h3>
+            <span>ROLL</span>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(-0.1, 0,0);">-</button>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0.1,0,0);">+</button>
+            </br>
+            <div class="clear"></div>
+            <span>YAW</span>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,-0.1,0);">-</button>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,0.1,0);">+</button>
+            </br>
+            <div class="clear"></div>
+            <span>PITCH</span>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,0,-0.1);">-</button>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,0,0.1);">+</button>
+            <div class="clear"></div>
+        </div>
+        <div class="controls">
+            <h3>loarm control</h3>
+            <span>ROLL</span>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(-0.1, 0,0);">-</button>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0.1,0,0);">+</button>
+            </br>
+            <div class="clear"></div>
+            <span>YAW</span>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,-0.1,0);">-</button>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,0.1,0);">+</button>
+            </br>
+            <div class="clear"></div>
+            <span>PITCH</span>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,0,-0.1);">-</button>
+            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,0,0.1);">+</button>
+            <div class="clear"></div>
+        </div>
+        -->
+    </body>
 </html>

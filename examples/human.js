@@ -21,8 +21,6 @@ var action_upper_limbs;
 var last_frame_time = 0;
 
 function init(){
-    console.log(vj2);
-
     var container = $('#container');
     scene = new THREE.Scene();     
     renderer = new THREE.WebGLRenderer();

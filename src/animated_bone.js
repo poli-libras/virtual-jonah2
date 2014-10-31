@@ -33,6 +33,12 @@ this.vj2 = this.vj2||{};
         this.done = false;
     };
 
+    p.set_quaternion = function(x,y,z,w){
+        this.quaternion_next.set(x,y,z,w);
+        this.current_time = this.duration;
+        this.done = false;
+    };
+
     p.update = function(dt){
         this.interpolate(this.current_time/this.duration);
         this.current_time -= Math.min(dt, this.current_time);
