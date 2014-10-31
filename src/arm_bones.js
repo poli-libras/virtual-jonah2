@@ -31,13 +31,13 @@ this.vj2 = this.vj2||{};
     p.update_wrist = function(yaw,pitch,roll){
         var x,y;
         var z = roll;
-        if(this.loc == "ORELHA"){
+        //if(this.loc == "ORELHA"){
             x = yaw;
             y = pitch;
-        }else{
-            y = yaw;
-            x = -pitch;
-        }
+        //}else{
+        //    y = yaw;
+        //    x = -pitch;
+        //}
         if(this.direction == "RIGHT")
             this.wrist.update_rotation(-x,y,-z);
         else
