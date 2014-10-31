@@ -44,7 +44,6 @@ function init(){
 function create_animation(human){
     scene.add(human);
     action_upper_limbs = new vj2.Action_upper_limbs(human);
-    action_upper_limbs.create_upper_limbs();
     last_frame_time = Date.now();
     loop();
 }
@@ -52,8 +51,8 @@ function create_animation(human){
 var rotate_camera = function(){
     var timer = Date.now() * 0.0005;
     camera.position.y = 1;
-    camera.position.z = Math.cos( timer ) *0.5;
-    camera.position.x =  Math.sin( timer )*0.5;
+    camera.position.z = Math.cos( timer ) * 0.5;
+    camera.position.x =  Math.sin( timer ) * 0.5;
     camera.lookAt( scene.position );   
 }
 
