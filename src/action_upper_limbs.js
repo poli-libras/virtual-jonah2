@@ -10,7 +10,7 @@ this.vj2 = this.vj2||{};
         this.upper_limbs_right = this.create_upper_limb("RIGHT");
 
         this.bones_moving = new vj2.List();
-        this.locations = new vj2.Locations("/src/locations.json");
+        this.locations = new vj2.Locations("../src/locations.json");
     }
 
     var p = Action_upper_limbs.prototype;
