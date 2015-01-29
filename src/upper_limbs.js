@@ -11,15 +11,6 @@ this.vj2 = this.vj2||{};
 
     var p = Upper_limbs.prototype;
 
-    p.set_shape = function(shape){
-        this.hand.set_shape(shape);
-    };
-
-    p.update = function(roll,yaw,pitch,loc){
-        this.arm_bones.update_loc(loc);
-        this.arm_bones.update_wrist(roll,yaw,pitch);
-    };
-
     p.update_wrist = function(roll,yaw,pitch){
         this.arm_bones.update_wrist(roll,yaw,pitch);
     };
@@ -32,9 +23,13 @@ this.vj2 = this.vj2||{};
         this.arm_bones.update_loarm(roll,yaw,pitch);
     };
 
-    p.animation = function(dt){
-        this.arm_bones.animation(dt);
-        this.hand.animation(dt);
+    p.update_finger = function(finger,phalange,roll,yaw,pitch){
+        this.hand.update_finger(finger,phalange,roll,yaw,pitch);
+    };
+
+    p.update = function(dt){
+        this.arm_bones.update(dt);
+        this.hand.update(dt);
     };
 
     vj2.Upper_limbs = Upper_limbs;

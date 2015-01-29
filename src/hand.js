@@ -15,45 +15,30 @@ this.vj2 = this.vj2||{};
 
     var p = Hand.prototype;
 
-    p.open = function(){
-        this.list_fingers.forEach(function(finger){
-            finger.open();
-        });
-    };
-
-    p.close = function(){
-        this.index.close(0.1,0);
-        this.middle.close(0,0);
-        this.ring.close(-0.1,0);
-        this.pinky.close(-0.2,0);
-    };
-
-    p.rock = function(){
-        var rotation_value = -3.14/2.5;
-        this.index.close(0.1,rotation_value);
-        this.middle.close(0,rotation_value);
-        this.ring.close(-0.1,rotation_value);
-        this.pinky.close(-0.2,rotation_value);
-    };
-
-    p.animation = function(dt){
-        this.list_fingers.forEach(function(finger){
-            finger.animation(dt);
-        });
-    };
-
-    p.set_shape = function(shape){
-        switch(shape)
-        {
-            case "MAO_FECHADA":
-                this.close();
+    p.update_finger = function(finger,phalange,roll,yaw,pitch){
+        switch(finger){
+            case "THUMB":
+                this.thumb.update_phalange(phalange,roll,yaw,pitch);
                 break;
-            case "MAO_ABERTA":
-                this.open();
+            case "INDEX":
+                this.index.update_phalange(phalange,roll,yaw,pitch);
                 break;
-            case "PEDRA":
-                this.rock();
+            case "MIDDLE":
+                this.middle.update_phalange(phalange,roll,yaw,pitch);
+                break;
+            case "RING":
+                this.ring.update_phalange(phalange,roll,yaw,pitch);
+                break;
+            case "PINKY":
+                this.pinky.update_phalange(phalange,roll,yaw,pitch);
+                break;
         }
+    };
+
+    p.update = function(dt){
+        this.list_fingers.forEach(function(finger){
+            finger.update(dt);
+        });
     };
 
     vj2.Hand = Hand;

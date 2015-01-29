@@ -3,40 +3,46 @@ this.vj2 = this.vj2||{};
 (function () {
     "use strict";
 
-    function Animated_bone(quaternion, duration){
+    function Animated_bone(quaternion){
         this.quaternion = quaternion;
         this.quaternion_next = quaternion.clone();
         this.quaternion_prev = quaternion.clone();
+        this.duration = 0;
+        this.current_time = 0;
+        this.done = true;
 
-        this.duration = duration;
-        this.current_time = duration;
-
+        // Helpers used exclusively in the legacy euler angles methods
         this.eulerHelper = new THREE.Euler(0,0,0);
         this.quaternionHelper = new THREE.Quaternion(0,0,0);
-        this.done = true;
     }
 
     var p = Animated_bone.prototype;
 
-    p.update_rotation = function(x,y,z){
+    // Euler angles based animation
+    // used on debug/edit mode as euler angles are more intuitive and rotation is iterative
+    // [
+    p.euler_animate_to = function(x,y,z,duration){
         this.eulerHelper.set(x,y,z);
         this.quaternionHelper.setFromEuler(this.eulerHelper);
         this.quaternion_next.multiply(this.quaternionHelper);
+
+        this.duration = duration;
         this.current_time = this.duration;
         this.done = false;
     };
+    // ]
 
-    p.set_rotation = function(x,y,z){
-        this.eulerHelper.set(x,y,z);
-        this.quaternion_next.setFromEuler(this.eulerHelper);
+    p.animate_to = function(x,y,z,w,duration){
+        this.quaternion_next.set(x,y,z,w);
+        this.duration = duration;
         this.current_time = this.duration;
         this.done = false;
     };
 
     p.set_quaternion = function(x,y,z,w){
+        this.quaternion.set(x,y,z,w);
         this.quaternion_next.set(x,y,z,w);
-        this.current_time = this.duration;
-        this.done = false;
+        this.end_animation();
     };
 
     p.update = function(dt){
@@ -47,13 +53,13 @@ this.vj2 = this.vj2||{};
     p.interpolate = function(factor){
         THREE.Quaternion.slerp(this.quaternion_next, this.quaternion_prev,
                 this.quaternion, factor);
-        if(factor === 0)
-            this.update_rotation_prev();
+        if(factor === 0) this.end_animation();
     };
 
-    p.update_rotation_prev = function(){
+    p.end_animation = function(){
         this.quaternion_prev.copy(this.quaternion_next);
         this.done = true;
+        this.current_time = 0;
     };
 
     p.reset_animation = function(){
