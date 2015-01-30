@@ -8,89 +8,717 @@
 	<script src="human.js"></script>
 	<script type="text/javascript" src="../build/jonah.min.js"></script>
     <style>
-        .controls {
-            width:140px;
-            padding-right:20px;
-            float:left;
+        .hidden {
+            display:none;
         }
-        .controls button {
-            float: right;
-        }
-        .controls span {
+        .left {
             float: left;
+        }
+        .right {
+            float: right;
         }
         .clear {
             clear:both;
+        }
+        .debug-controls {
+            width:500px;
+            display:none;
+            padding-right:60px;
+        }
+        .debug-subcontrols {
+            width:140px;
+            padding-right:20px;
         }
     </style>
 </head>
     <body>
         <div id="container" style="width:1000px; height:500px;"></div>
         <div>
+            <h3>Debug</h3>
+            <button onclick="action_upper_limbs.toggle_debug();">TOGGLE</button>
+            <button class="hidden" id="trace-quaternion" onclick="action_upper_limbs.trace_quaternions();">TRACE QUATERNION</button>
+            <select class="hidden" id="select-edit-side" onchange="action_upper_limbs.show_edit_controls();">
+                <option value="right">RIGHT</option> 
+                <option value="left">LEFT</option> 
+            </select>
+
+            <select class="hidden" id="select-edit-part" onchange="action_upper_limbs.show_edit_controls();">
+                <option value="arm">ARM</option> 
+                <option value="thumb">THUMB</option> 
+                <option value="index">INDEX</option> 
+                <option value="middle">MIDDLE</option> 
+                <option value="ring">RING</option> 
+                <option value="pinky">PINKY</option> 
+            </select>
+        </div>
+
+        <div class="main-controls">
             <h3>Locations</h3>
             <button onclick="action_upper_limbs.set_location('DEFAULT');">DEFAULT</button>
             <button onclick="action_upper_limbs.set_location('ESPACO_NEUTRO');">ESPACO NEUTRO</button>
             <button onclick="action_upper_limbs.set_location('ORELHA');">ORELHA</button>
             <button onclick="action_upper_limbs.set_location('OMBRO_ESQUERDO');">OMBRO ESQUERDO</button>
+            <button onclick="action_upper_limbs.set_location('MAO_ALUNO');">MAO ALUNO</button>
         </div>
-        <!--
-        <div>
-            <h3>Shapes</h3>
-            <button onclick="action_upper_limbs.set_shape('MAO_FECHADA');">MAO_FECHADA</button>
-            <button onclick="action_upper_limbs.set_shape('MAO_ABERTA');">MAO_ABERTA</button>
-            <button onclick="action_upper_limbs.set_shape('PEDRA');">PEDRA</button>
+
+        <div id="right-arm" class="left debug-controls">
+            <h3>Right arm</h3>
+            <div class="debug-subcontrols left">
+                <h3>Wrist</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_wrist(-1.57, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_wrist(1.57,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_wrist(0,-1.57,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_wrist(0,1.57,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_wrist(0,0,-1.57);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_wrist(0,0,1.57);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Uparm</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_uparm(-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_uparm(0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Loarm</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_loarm(-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_loarm(0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
         </div>
-        <div class="controls">
-            <h3>wrist control</h3>
-            <span>ROLL</span>
-            <button onclick="action_upper_limbs.update_wrist(-1.57, 0,0);">-</button>
-            <button onclick="action_upper_limbs.update_wrist(1.57,0,0);">+</button>
-            </br>
-            <div class="clear"></div>
-            <span>YAW</span>
-            <button onclick="action_upper_limbs.update_wrist(0,-1.57,0);">-</button>
-            <button onclick="action_upper_limbs.update_wrist(0,1.57,0);">+</button>
-            </br>
-            <div class="clear"></div>
-            <span>PITCH</span>
-            <button onclick="action_upper_limbs.update_wrist(0,0,-1.57);">-</button>
-            <button onclick="action_upper_limbs.update_wrist(0,0,1.57);">+</button>
-            <div class="clear"></div>
+
+        <div id="left-arm" class="left debug-controls">
+            <h3>Left arm</h3>
+            <div class="debug-subcontrols left">
+                <h3>Wrist</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_wrist(-1.57, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_wrist(1.57,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_wrist(0,-1.57,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_wrist(0,1.57,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_wrist(0,0,-1.57);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_wrist(0,0,1.57);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Uparm</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_uparm(-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_uparm(0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_uparm(0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_uparm(0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_uparm(0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_uparm(0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Loarm</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_loarm(-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_loarm(0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_loarm(0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_loarm(0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_loarm(0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_loarm(0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
         </div>
-        <div class="controls">
-            <h3>uparm control</h3>
-            <span>ROLL</span>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(-0.1, 0,0);">-</button>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0.1,0,0);">+</button>
-            </br>
-            <div class="clear"></div>
-            <span>YAW</span>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,-0.1,0);">-</button>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,0.1,0);">+</button>
-            </br>
-            <div class="clear"></div>
-            <span>PITCH</span>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,0,-0.1);">-</button>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_uparm(0,0,0.1);">+</button>
-            <div class="clear"></div>
+
+        <div id="left-thumb" class="left debug-controls">
+            <h3>Left thumb</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('THUMB',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
         </div>
-        <div class="controls">
-            <h3>loarm control</h3>
-            <span>ROLL</span>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(-0.1, 0,0);">-</button>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0.1,0,0);">+</button>
-            </br>
-            <div class="clear"></div>
-            <span>YAW</span>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,-0.1,0);">-</button>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,0.1,0);">+</button>
-            </br>
-            <div class="clear"></div>
-            <span>PITCH</span>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,0,-0.1);">-</button>
-            <button onclick="action_upper_limbs.upper_limbs_right.update_loarm(0,0,0.1);">+</button>
-            <div class="clear"></div>
+
+        <div id="left-index" class="left debug-controls">
+            <h3>Left index</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('INDEX',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
         </div>
-        -->
+
+        <div id="left-middle" class="left debug-controls">
+            <h3>Left middle</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('MIDDLE',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div id="left-ring" class="left debug-controls">
+            <h3>Left ring</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('RING',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div id="left-pinky" class="left debug-controls">
+            <h3>Left pinky</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_left.update_finger('PINKY',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div id="right-thumb" class="left debug-controls">
+            <h3>Right thumb</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('THUMB',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div id="right-index" class="left debug-controls">
+            <h3>Right index</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('INDEX',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div id="right-middle" class="left debug-controls">
+            <h3>Right middle</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('MIDDLE',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div id="right-ring" class="left debug-controls">
+            <h3>Right ring</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('RING',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div id="right-pinky" class="left debug-controls">
+            <h3>Right pinky</h3>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-1</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',1,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',1,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',1,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',1,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',1,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',1,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-2</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',2,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',2,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',2,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',2,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',2,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',2,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+            <div class="debug-subcontrols left">
+                <h3>Phalange-3</h3>
+                <span class="left">ROLL</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',3,-0.1, 0,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',3,0.1,0,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">YAW</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',3,0,-0.1,0);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',3,0,0.1,0);">+</button>
+                </br>
+                <div class="clear"></div>
+                <span class="left">PITCH</span>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',3,0,0,-0.1);">-</button>
+                <button class="right" onclick="action_upper_limbs.upper_limbs_right.update_finger('PINKY',3,0,0,0.1);">+</button>
+                <div class="clear"></div>
+            </div>
+        </div>
     </body>
 </html>
