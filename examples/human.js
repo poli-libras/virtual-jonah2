@@ -59,7 +59,7 @@ function loop(){
     //rotate_camera();
     var dt = Date.now() - last_frame_time;
 
-    action_upper_limbs.animation(dt/1000);
+    action_upper_limbs.update(dt/1000);
     renderer.render(scene, camera);
 
     last_frame_time = Date.now();

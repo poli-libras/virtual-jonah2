@@ -8,7 +8,7 @@ this.vj2 = this.vj2||{};
         this.quaternion_next = quaternion.clone();
         this.quaternion_prev = quaternion.clone();
         this.duration = 0;
-        this.current_time = 0;
+        this.remaining_time = 0;
         this.done = true;
 
         // Helpers used exclusively in the legacy euler angles methods
@@ -27,7 +27,7 @@ this.vj2 = this.vj2||{};
         this.quaternion_next.multiply(this.quaternionHelper);
 
         this.duration = duration;
-        this.current_time = this.duration;
+        this.remaining_time = this.duration;
         this.done = false;
     };
     // ]
@@ -35,7 +35,7 @@ this.vj2 = this.vj2||{};
     p.animate_to = function(x,y,z,w,duration){
         this.quaternion_next.set(x,y,z,w);
         this.duration = duration;
-        this.current_time = this.duration;
+        this.remaining_time = this.duration;
         this.done = false;
     };
 
@@ -46,8 +46,8 @@ this.vj2 = this.vj2||{};
     };
 
     p.update = function(dt){
-        this.interpolate(this.current_time/this.duration);
-        this.current_time -= Math.min(dt, this.current_time);
+        this.interpolate(this.remaining_time/this.duration);
+        this.remaining_time -= Math.min(dt, this.remaining_time);
     };
 
     p.interpolate = function(factor){
@@ -59,11 +59,11 @@ this.vj2 = this.vj2||{};
     p.end_animation = function(){
         this.quaternion_prev.copy(this.quaternion_next);
         this.done = true;
-        this.current_time = 0;
+        this.remaining_time = 0;
     };
 
     p.reset_animation = function(){
-        this.current_time = this.duration;
+        this.remaining_time = this.duration;
     };
 
     vj2.Animated_bone = Animated_bone;

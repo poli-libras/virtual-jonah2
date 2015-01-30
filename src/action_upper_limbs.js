@@ -11,6 +11,7 @@ this.vj2 = this.vj2||{};
 
         this.bones_moving = new vj2.List();
         this.locations = new vj2.Locations("../src/locations.json");
+        this.eulerMode = false;
     }
 
     var p = Action_upper_limbs.prototype;
@@ -24,9 +25,9 @@ this.vj2 = this.vj2||{};
     };
 
     p.create_arm_bones = function(direction){
-        var up_arm_left = this.get_bone("UpArm_" + direction.charAt(0)).quaternion;
-        var lo_arm_left = this.get_bone("LoArm_" + direction.charAt(0)).quaternion;
-        var wrist_left = this.get_bone("Hand_" + direction.charAt(0)).quaternion;
+        var up_arm_left = this.get_model_bone("UpArm_" + direction.charAt(0)).quaternion;
+        var lo_arm_left = this.get_model_bone("LoArm_" + direction.charAt(0)).quaternion;
+        var wrist_left = this.get_model_bone("Hand_" + direction.charAt(0)).quaternion;
 
         return new vj2.Arm_bones(up_arm_left,lo_arm_left,wrist_left,direction);
     };
@@ -44,66 +45,124 @@ this.vj2 = this.vj2||{};
         var ar_bones = [];
 
         for(var i = 1;i <=3; i++)
-            ar_bones.push(this.get_bone("Finger-" + finger_index + "-" + i + "_" + direction.charAt(0)).quaternion);
+            ar_bones.push(this.get_model_bone("Finger-" + finger_index + "-" + i + "_" + direction.charAt(0)).quaternion);
 
         return new vj2.Finger(ar_bones[0],ar_bones[1],ar_bones[2],direction);
     };
-
-    p.animated_bone_pool = {};
-    p.create_animated_bone = function(name, time)
-    {
-        if(this.animated_bone_pool[name] !== undefined)
-        {
-            return this.animated_bone_pool[name];
-        }
-        else
-        {
-            this.animated_bone_pool[name] = new vj2.Animated_bone(this.get_bone(name).quaternion, time);
-            return this.animated_bone_pool[name];
-        }
-    };
-
+    
     //
     // Factory methods - ]
     //
 
-    p.update_left = function(roll,yaw,pitch,loc){
-        this.upper_limbs_left.update(roll,yaw,pitch,loc);
+    p.trace_quaternions = function(){
+        this.trace_quaternions_side("LEFT");
+        this.trace_quaternions_side("RIGHT");
+    };
+    
+    p.trace_quaternions_side = function(side){
+        console.log(side + " ARM");
+        this.trace_quaternion("UpArm_" + side.charAt(0));
+        this.trace_quaternion("LoArm_" + side.charAt(0));
+        this.trace_quaternion("Hand_" + side.charAt(0));
+        console.log("==================================================");
+
+        for(var i = 1; i <=5; i++)
+        {
+            switch(i){
+                case 1:
+                    console.log(side + " THUMB");
+                    break;
+                case 2:
+                    console.log(side + " INDEX");
+                    break;
+                case 3:
+                    console.log(side + " MIDDLE");
+                    break;
+                case 4:
+                    console.log(side + " RING");
+                    break;
+                case 5:
+                    console.log(side + " PINKY");
+                    break;
+            }
+            for(var j = 1; j<=3; j++)
+            {
+                this.trace_quaternion("Finger-" + i + "-" + j + "_" + side.charAt(0));
+            }
+            console.log("==================================================");
+        }
     };
 
-    p.update_right = function(roll,yaw,pitch,loc){
-        this.upper_limbs_right.update(roll,yaw,pitch,loc);
+    p.trace_quaternion = function(label){
+        var q = this.get_model_bone(label).quaternion;
+        console.log(label + ": (" + q.x + ", " + q.y + ", " + q.z + ", " + q.w + ")");
     };
 
-    p.update_both = function(roll,yaw,pitch,loc){
-        this.upper_limbs_left.update(roll,yaw,pitch,loc);
-        this.upper_limbs_right.update(roll,yaw,pitch,loc);
+    p.show_edit_controls = function(e){
+        if(this.eulerMode)
+        {
+            $(".debug-controls").hide();
+            $("#" + $("#select-edit-side").val() + "-" + $("#select-edit-part").val()).show();
+        }
     };
 
-    p.update_wrist = function(roll,yaw,pitch){
-        this.upper_limbs_right.update_wrist(roll,yaw,pitch);
-        this.upper_limbs_left.update_wrist(roll,yaw,pitch);
+    p.reset_model_pose = function(){
+        var loc = this.locations.getLocation("DEFAULT");
+        for(var bone_name in loc)
+        {
+            var anim_bone = this.get_animated_bone(bone_name);
+            anim_bone.set_quaternion(loc[bone_name].x, loc[bone_name].y,loc[bone_name].z,loc[bone_name].w);
+        }
+    };
+    
+    p.toggle_debug = function(){
+        this.reset_model_pose();        
+        this.eulerMode = !this.eulerMode;
+        if(this.eulerMode) {
+            $("#trace-quaternion").show();
+            $("#select-edit-part").show();
+            $("#select-edit-side").show();
+            this.show_edit_controls();
+            $(".main-controls").hide();
+        }
+        else {
+            $(".debug-controls").hide();
+            $("#trace-quaternion").hide();
+            $("#select-edit-part").hide();
+            $("#select-edit-side").hide();
+            $(".main-controls").show();
+        }
     };
 
-    p.set_shape = function(shape){
-        this.upper_limbs_right.set_shape(shape);
-        this.upper_limbs_left.set_shape(shape);
+    p.animated_bone_pool = {};
+    p.get_animated_bone = function(name)
+    {
+        if(this.animated_bone_pool[name] === undefined)
+            this.animated_bone_pool[name] = new vj2.Animated_bone(this.get_model_bone(name).quaternion);
+        return this.animated_bone_pool[name];
     };
 
-    p.animation = function(dt){
+    p.update = function(dt){
+        if(this.eulerMode) this.eulerUpdate(dt);
+        else this.quaternionUpdate(dt);
+    };
+
+    p.eulerUpdate = function(dt){
+        this.upper_limbs_right.update(dt);
+        this.upper_limbs_left.update(dt);
+    };
+
+    p.quaternionUpdate = function(dt){
         var itr = this.bones_moving.head;
         while(itr !== null)
         {
             itr.obj.update(dt);
-            if(itr.obj.done)
-            {
-                this.bones_moving.remove(itr.obj);
-            }
+            if(itr.obj.done) this.bones_moving.remove(itr.obj);
             itr = itr.next;
         }
     };
 
-    p.get_bone = function(bone_name){
+    p.get_model_bone = function(bone_name){
         var bones = this.human_model.skeleton.bones;
         for(var i = 0; i < bones.length; i++)
             if(bones[i].name == bone_name)
@@ -113,14 +172,15 @@ this.vj2 = this.vj2||{};
     p.set_location = function(location_name){
         var loc = this.locations.getLocation(location_name);
 
-        for(var s in loc)
+        for(var bone_name in loc)
         {
-            var anim_bone = this.create_animated_bone(s, 1.5);
+            var anim_bone = this.get_animated_bone(bone_name);
             if(anim_bone.done)
             {
                 this.bones_moving.add(anim_bone); 
-                anim_bone.set_quaternion(loc[s].x,loc[s].y,loc[s].z,loc[s].w);
-            }
+                anim_bone.animate_to(loc[bone_name].x,
+                        loc[bone_name].y,loc[bone_name].z,loc[bone_name].w, 1.5);
+            } 
         }
     };
 
