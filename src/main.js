@@ -38,7 +38,7 @@ function init()
 function create_animation(human)
 {
     scene.add(human);
-    action_upper_limbs = new vj2.Action_upper_limbs(human);
+    action_upper_limbs = new vj2.Action_upper_limbs(human, scene);
     last_frame_time = Date.now();
     loop();
 }

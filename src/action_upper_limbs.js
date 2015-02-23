@@ -3,13 +3,15 @@ this.vj2 = this.vj2||{};
 (function () {
     "use strict";
 
-    function Action_upper_limbs(human_model){
+    function Action_upper_limbs(human_model, scene){
         this.human_model = human_model;
+        this.scene = scene;
 
         this.upper_limbs_left = this.create_upper_limb("LEFT");
         this.upper_limbs_right = this.create_upper_limb("RIGHT");
 
         this.bones_moving = new vj2.List();
+        this.bones_globally_locked = new vj2.List();
         this.locations = new vj2.Locations("../src/locations.json");
         this.eulerMode = false;
     }
