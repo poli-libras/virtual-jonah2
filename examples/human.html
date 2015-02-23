@@ -5,8 +5,7 @@
 	<script src="../resources/qunit-1.14.0.js"></script>
 	<script src="../resources/jquery-1.10.2.min.js"></script>
 	<script src="../resources/three.min.js"></script>
-	<script src="human.js"></script>
-	<script type="text/javascript" src="../build/jonah.min.js"></script>
+	<script src="../build/jonah.min.js"></script>
     <style>
         .hidden {
             display:none;
@@ -36,7 +35,7 @@
         <div>
             <h3>Debug</h3>
             <button onclick="action_upper_limbs.toggle_debug();">TOGGLE</button>
-            <button class="hidden" id="trace-quaternion" onclick="action_upper_limbs.trace_quaternions();">TRACE QUATERNION</button>
+            <button id="trace-quaternion" onclick="action_upper_limbs.trace_quaternions();">TRACE QUATERNION</button>
             <select class="hidden" id="select-edit-side" onchange="action_upper_limbs.show_edit_controls();">
                 <option value="right">RIGHT</option> 
                 <option value="left">LEFT</option> 

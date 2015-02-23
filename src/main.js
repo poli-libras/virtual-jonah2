@@ -1,4 +1,5 @@
 window.onload = init;        
+
 var WIDTH = 1000,
     HEIGHT = 500;
 
@@ -7,20 +8,15 @@ var VIEW_ANGLE = 45,
     NEAR = 0.1,
     FAR = 10000;
 
-
-var camera =
-new THREE.PerspectiveCamera(
-        VIEW_ANGLE,
-        ASPECT,
-        NEAR,
-        FAR);
+var camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
 var clock = new THREE.Clock();
 var scene,renderer;
 var action_upper_limbs;
 
 var last_frame_time = 0;
 
-function init(){
+function init()
+{
     var container = $('#container');
     scene = new THREE.Scene();     
     renderer = new THREE.WebGLRenderer();
@@ -39,14 +35,16 @@ function init(){
     load_model_json('../resources/model/human.js',create_animation);
 }
 
-function create_animation(human){
+function create_animation(human)
+{
     scene.add(human);
     action_upper_limbs = new vj2.Action_upper_limbs(human);
     last_frame_time = Date.now();
     loop();
 }
 
-var rotate_camera = function(){
+function rotate_camer()
+{
     var timer = Date.now() * 0.0005;
     camera.position.y = 1;
     camera.position.z = Math.cos( timer ) * 0.5;
@@ -54,7 +52,8 @@ var rotate_camera = function(){
     camera.lookAt( scene.position );   
 }
 
-function loop(){
+function loop()
+{
     requestAnimationFrame(loop);
     //rotate_camera();
     var dt = Date.now() - last_frame_time;
