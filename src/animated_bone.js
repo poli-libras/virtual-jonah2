@@ -33,6 +33,7 @@ this.vj2 = this.vj2||{};
     // ]
 
     p.animate_to = function(x,y,z,w,duration){
+        this.quaternion_prev.copy(this.quaternion);
         this.quaternion_next.set(x,y,z,w);
         this.duration = duration;
         this.remaining_time = this.duration;
@@ -42,6 +43,7 @@ this.vj2 = this.vj2||{};
     p.set_quaternion = function(x,y,z,w){
         this.quaternion.set(x,y,z,w);
         this.quaternion_next.set(x,y,z,w);
+        this.quaternion_prev.set(x,y,z,w);
         this.end_animation();
     };
 
