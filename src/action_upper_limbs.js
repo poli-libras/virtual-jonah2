@@ -3,7 +3,11 @@ this.vj2 = this.vj2||{};
 (function () {
     "use strict";
 
-    function Action_upper_limbs(human_model, scene){
+    var SHOULDER_ELBOW_LENGTH = 0.20294934603318998;
+    var ELBOW_WRIST_LENGTH = 0.24431847442166119;
+
+    function Action_upper_limbs(human_model, scene)
+    {
         this.human_model = human_model;
         this.scene = scene;
 
@@ -14,6 +18,39 @@ this.vj2 = this.vj2||{};
         this.locations = new vj2.Locations("../src/locations.json");
         this.orientations = new vj2.Orientations("../src/orientations.json");
         this.eulerMode = false;
+
+        // Wirst position measured in relation to the shoulder
+        var wrist_position = new THREE.Vector3().set(0.04427272081375122, -0.02754998207092285, 
+                                                        0.43973060697317123);
+        var u = SHOULDER_ELBOW_LENGTH;
+        var f = ELBOW_WRIST_LENGTH;
+        var h = 0;
+        var d = wrist_position.length();
+        var l = f;
+        var elbow_angle = Math.PI - Math.acos((u*u + l*l - d*d)/(2*u*l));
+        var shoulder_angle_phi = Math.acos((u*u + d*d - l*l)/(2*u*d)) - Math.PI / 2;
+        var shoulder_angle_tetha = Math.PI - Math.acos(wrist_position.x/
+                Math.sqrt(wrist_position.x * wrist_position.x + wrist_position.z * wrist_position.z));
+
+        // Apply elbow yaw
+        var elbow_q = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, elbow_angle, 0));
+        // Apply shoulder yaw and pitch (roll is 0 by default and can be manipulated by an animator - redundant degree of freedom)
+        var shoulder_q = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, shoulder_angle_tetha, shoulder_angle_phi));
+
+        this.get_model_bone("LoArm_R").quaternion.set(elbow_q.x, elbow_q.y, elbow_q.z, elbow_q.w);
+        this.get_model_bone("UpArm_R").quaternion.set(shoulder_q.x, shoulder_q.y, shoulder_q.z, shoulder_q.w);
+
+        console.log("u = " + u);
+        console.log("f = " + f);
+        console.log("h = " + h);
+        console.log("d = " + d);
+        console.log("l = " + l);
+        console.log((u*u + l*l - d*d));
+        console.log((2*u*l));
+        console.log((u*u + l*l - d*d)/(2*u*l));
+        console.log("elbow_angle_alpha = " + elbow_angle);
+        console.log("shoulder_angle_phi = " + shoulder_angle_phi);
+        console.log("shoulder_angle_tetha = " + shoulder_angle_tetha);
     }
 
     var p = Action_upper_limbs.prototype;
@@ -57,8 +94,14 @@ this.vj2 = this.vj2||{};
     //
 
     p.trace_quaternions = function(){
-        this.trace_quaternions_side("LEFT");
-        this.trace_quaternions_side("RIGHT");
+        //this.trace_quaternions_side("LEFT");
+        //this.trace_quaternions_side("RIGHT");
+
+        // Trace the position of the wrist in relation to the position of the shoulder
+        // for use in the Inverse Kinematics analytic solution
+        var s = this.get_model_bone("UpArm_R");
+        var w = this.get_model_bone("Hand_R");
+        console.log(new THREE.Vector3().subVectors(w.getWorldPosition(), s.getWorldPosition()));
     };
     
     p.trace_quaternions_side = function(side){
