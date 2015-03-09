@@ -43,7 +43,7 @@ function create_animation(human)
     loop();
 }
 
-function rotate_camer()
+function rotate_camera()
 {
     var timer = Date.now() * 0.0005;
     camera.position.y = 1;
