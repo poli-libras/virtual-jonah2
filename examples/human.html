@@ -52,12 +52,27 @@
         </div>
 
         <div class="main-controls">
+            <h3>Target</h3>
+            <select id="select-main-side"> 
+                <option value="right">RIGHT</option> 
+                <option value="left">LEFT</option> 
+                <option value="both">BOTH</option> 
+            </select>
+
             <h3>Locations</h3>
-            <button onclick="action_upper_limbs.set_hand('DEFAULT');">DEFAULT</button>
-            <button onclick="action_upper_limbs.set_hand('ESPACO_NEUTRO', 'MAO_FRENTE');">ESPACO NEUTRO</button>
-            <button onclick="action_upper_limbs.set_hand('ORELHA');">ORELHA</button>
-            <button onclick="action_upper_limbs.set_hand('OMBRO_ESQUERDO', 'MAO_FRENTE');">OMBRO ESQUERDO</button>
-            <button onclick="action_upper_limbs.set_hand('MAO_ALUNO');">MAO ALUNO</button>
+            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'DEFAULT');">DEFAULT</button>
+            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'ESPACO_NEUTRO');">ESPACO NEUTRO</button>
+            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'ORELHA');">ORELHA</button>
+            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'OMBRO');">OMBRO</button>
+
+            <h3>Orientations</h3>
+            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, null, 'DEFAULT');">DEFAULT</button>
+            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, null, 'FRENTE');">FRENTE</button>
+
+
+            <h3>Shapes</h3>
+            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, null, null, 'DEFAULT');">DEFAULT</button>
+            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, null, null, 'ALUNO');">ALUNO</button>
         </div>
 
         <div id="right-arm" class="left debug-controls">

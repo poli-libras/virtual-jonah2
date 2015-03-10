@@ -11,9 +11,11 @@ this.vj2 = this.vj2||{};
         this.upper_limbs_right = this.create_upper_limb("RIGHT");
 
         this.bones_moving = new vj2.List();
-        this.locations = new vj2.Locations("../src/locations.json");
-        this.orientations = new vj2.Orientations("../src/orientations.json");
         this.eulerMode = false;
+
+        this.locations = new vj2.Locations();
+        this.orientations = new vj2.Orientations();
+        this.shapes = new vj2.Shapes();
     }
 
     var p = Action_upper_limbs.prototype;
@@ -112,11 +114,10 @@ this.vj2 = this.vj2||{};
     };
 
     p.reset_model_pose = function(){
-        var loc = this.locations.getLocation("DEFAULT");
-        for(var bone_name in loc)
+        for(var bone_name in this.animated_bone_pool)
         {
-            var anim_bone = this.get_animated_bone(bone_name);
-            anim_bone.set_quaternion(loc[bone_name].x, loc[bone_name].y,loc[bone_name].z,loc[bone_name].w);
+            var anim_bone = this.animated_bone_pool[bone_name];
+            anim_bone.set_quaternion(0, 0, 0, 1);
         }
     };
 
@@ -174,83 +175,88 @@ this.vj2 = this.vj2||{};
                 return bones[i];
     };
 
-    p.set_hand = function(location_name, orientation_name){
-        var loc = this.locations.getLocation(location_name);
-        var or = this.orientations.getOrientation(orientation_name);
+    p.set_hand = function(limb, location_name, orientation_name, shape_name)
+    {
+        limb = (typeof limb === 'undefined') ? 'both' : limb;
+
+        var loc = this.locations.get_config(location_name, limb);
+        var or = this.orientations.get_config(orientation_name, limb);
+        var sp = this.shapes.get_config(shape_name, limb);
 
         var bone, loc_bone, anim_bone, bone_name;
 
-        if(or !== null)
+        var prev_quaternions = {};
+        var next_quaternions = {};
+
+        for(bone_name in loc)
         {
-            var prev_quaternions = {};
-            var next_quaternions = {};
+            bone = this.get_model_bone(bone_name);
+            loc_bone = loc[bone_name];
+            prev_quaternions[bone_name] = bone.quaternion.clone();
+            bone.quaternion.set(loc_bone.x, loc_bone.y, loc_bone.z, loc_bone.w);
+        }
+        this.scene.updateMatrixWorld(true);
+        this.human_model.skeleton.update();
 
-            if(loc !== null)
-            {
-                for(bone_name in loc)
-                {
-                    bone = this.get_model_bone(bone_name);
-                    loc_bone = loc[bone_name];
-                    prev_quaternions[bone_name] = bone.quaternion.clone();
-                    bone.quaternion.set(loc_bone.x, loc_bone.y, loc_bone.z, loc_bone.w);
-                }
-                this.scene.updateMatrixWorld(true);
-                this.human_model.skeleton.update();
-            }
+        for(bone_name in or)
+        {
+            var obj_name = bone_name;
+            var obj_q = or[bone_name];
+            bone = this.get_model_bone(obj_name);
+            loc_bone = new THREE.Quaternion().multiplyQuaternions(
+                bone.parent.getWorldQuaternion().clone().inverse(), 
+                new THREE.Quaternion().set(obj_q.x, obj_q.y, obj_q.z, obj_q.w));
 
-            for(bone_name in or)
+            if(loc[obj_name] !== undefined)
             {
-                var obj_name = bone_name;
-                var obj_q = or[bone_name];
-                bone = this.get_model_bone(obj_name);
+                var loc_bone2 = loc[obj_name];
                 loc_bone = new THREE.Quaternion().multiplyQuaternions(
-                    bone.parent.getWorldQuaternion().clone().inverse(), 
-                    new THREE.Quaternion().set(obj_q.x, obj_q.y, obj_q.z, obj_q.w));
-
-                if(loc[obj_name] !== undefined)
-                {
-                    var loc_bone2 = loc[obj_name];
-                    loc_bone = new THREE.Quaternion().multiplyQuaternions(
-                        loc_bone, 
-                        new THREE.Quaternion().set(loc_bone2.x, loc_bone2.y, loc_bone2.z, loc_bone2.w));
-                }
-
-                next_quaternions[obj_name] = loc_bone;
+                    loc_bone, 
+                    new THREE.Quaternion().set(loc_bone2.x, loc_bone2.y, loc_bone2.z, loc_bone2.w));
             }
+            next_quaternions[obj_name] = loc_bone;
+        }
 
-            for(bone_name in prev_quaternions)
-            {
-                bone = this.get_model_bone(bone_name);
-                loc_bone = prev_quaternions[bone_name];
-                bone.quaternion.set(loc_bone.x, loc_bone.y, loc_bone.z, loc_bone.w);
-            }
-            this.scene.updateMatrixWorld(true);
-            this.human_model.skeleton.update();
+        for(bone_name in prev_quaternions)
+        {
+            bone = this.get_model_bone(bone_name);
+            loc_bone = prev_quaternions[bone_name];
+            bone.quaternion.set(loc_bone.x, loc_bone.y, loc_bone.z, loc_bone.w);
+        }
+        this.scene.updateMatrixWorld(true);
+        this.human_model.skeleton.update();
 
-            for(bone_name in next_quaternions)
+        for(bone_name in next_quaternions)
+        {
+            anim_bone = this.get_animated_bone(bone_name);
+            loc_bone = next_quaternions[bone_name];
+            if(anim_bone.done)
             {
-                anim_bone = this.get_animated_bone(bone_name);
-                loc_bone = next_quaternions[bone_name];
-                if(anim_bone.done)
-                {
-                    this.bones_moving.add(anim_bone);
-                    anim_bone.animate_to(loc_bone.x,loc_bone.y,loc_bone.z,loc_bone.w, 1.5);
-                }
+                this.bones_moving.add(anim_bone);
+                anim_bone.animate_to(loc_bone.x,loc_bone.y,loc_bone.z,loc_bone.w, 1.5);
             }
         }
 
-        if(loc !== null)
+        for(bone_name in loc)
         {
-            for(bone_name in loc)
+            anim_bone = this.get_animated_bone(bone_name);
+            if(anim_bone.done)
             {
-                anim_bone = this.get_animated_bone(bone_name);
-                if(anim_bone.done)
-                {
-                    this.bones_moving.add(anim_bone); 
-                    loc_bone = loc[bone_name];
-                    anim_bone.animate_to(loc_bone.x,loc_bone.y,loc_bone.z,loc_bone.w, 1.5);
-                } 
-            }
+                this.bones_moving.add(anim_bone); 
+                loc_bone = loc[bone_name];
+                anim_bone.animate_to(loc_bone.x,loc_bone.y,loc_bone.z,loc_bone.w, 1.5);
+            } 
+        }
+        
+        for(bone_name in sp)
+        {
+            anim_bone = this.get_animated_bone(bone_name);
+            if(anim_bone.done)
+            {
+                this.bones_moving.add(anim_bone); 
+                loc_bone = sp[bone_name];
+                anim_bone.animate_to(loc_bone.x,loc_bone.y,loc_bone.z,loc_bone.w, 1.5);
+            } 
         }
     };
 
