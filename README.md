@@ -20,3 +20,14 @@ necessária a permissão de administrador em alguns sistemas):
 
 Por fim executamos a tarefa de testes com o grunt
     grunt qunit
+
+Modelo de dados
+---------------
+
+Na pasta resources do projeto estão 3 arquivos contendo as possíveis configurações de Locação, Orientação e Gesto para a mão do avatar. São eles:
+
+- resources/locations.json
+- resources/orientations.json
+- resources/shapes.json
+
+As configurações de Locação e Gesto são compostas por listas de bones e seus respectivos quaternions(representando uma rotação), e se encontram em coordenadas locais, isto é, rotacionadas em relação ao seu bone pai na hierarquia do esqueleto. As configurações de Orientação são um caso especial e contem quaternions em coordenadas globais, isto é, representando uma rotação de acordo com o sistema de coordenadas da cena.
