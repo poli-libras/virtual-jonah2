@@ -125,18 +125,14 @@ this.vj2 = this.vj2||{};
         this.reset_model_pose();        
         this.eulerMode = !this.eulerMode;
         if(this.eulerMode) {
-            $("#trace-quaternion").show();
             $("#select-edit-part").show();
             $("#select-edit-side").show();
             this.show_edit_controls();
-            $(".main-controls").hide();
         }
         else {
             $(".debug-controls").hide();
-            $("#trace-quaternion").hide();
             $("#select-edit-part").hide();
             $("#select-edit-side").hide();
-            $(".main-controls").show();
         }
     };
 
@@ -150,7 +146,7 @@ this.vj2 = this.vj2||{};
 
     p.update = function(dt){
         if(this.eulerMode) this.eulerUpdate(dt);
-        else this.quaternionUpdate(dt);
+        this.quaternionUpdate(dt);
     };
 
     p.eulerUpdate = function(dt){
