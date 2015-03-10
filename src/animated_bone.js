@@ -20,7 +20,6 @@ this.vj2 = this.vj2||{};
 
     // Euler angles based animation
     // used on debug/edit mode as euler angles are more intuitive and rotation is iterative
-    // [
     p.euler_animate_to = function(x,y,z,duration){
         this.eulerHelper.set(x,y,z);
         this.quaternionHelper.setFromEuler(this.eulerHelper);
@@ -30,7 +29,6 @@ this.vj2 = this.vj2||{};
         this.remaining_time = this.duration;
         this.done = false;
     };
-    // ]
 
     p.animate_to = function(x,y,z,w,duration){
         this.quaternion_prev.copy(this.quaternion);
@@ -53,9 +51,12 @@ this.vj2 = this.vj2||{};
     };
 
     p.interpolate = function(factor){
-        THREE.Quaternion.slerp(this.quaternion_next, this.quaternion_prev,
-                this.quaternion, factor);
-        if(factor === 0) this.end_animation();
+        if(!this.done)
+        {
+            THREE.Quaternion.slerp(this.quaternion_next, this.quaternion_prev,
+                    this.quaternion, factor);
+            if(factor === 0) this.end_animation();
+        }
     };
 
     p.end_animation = function(){
