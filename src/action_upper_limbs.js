@@ -9,9 +9,13 @@ this.vj2 = this.vj2||{};
         
         this.bones_moving = new vj2.List();
 
-        this.locations = new vj2.Locations();
-        this.orientations = new vj2.Orientations();
-        this.shapes = new vj2.Shapes();
+        var self = this;
+        (new vj2.Limb_config_loader()).load('../resources/locations.json', 
+                function (config) {self.locations = config;});
+        (new vj2.Limb_config_loader()).load('../resources/orientations.json', 
+                function (config) {self.orientations = config;});
+        (new vj2.Limb_config_loader()).load('../resources/shapes.json', 
+                function (config) {self.shapes = config;});
     }
 
     var p = Action_upper_limbs.prototype;
