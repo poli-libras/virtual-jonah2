@@ -1,0 +1,8 @@
+{
+    "BOCA": {
+        "left_hand_resting": true,
+        "start_location": "BOCA",
+        "start_orientation": "INCLINADO_COSTAS",
+        "shape": "INDICADOR"
+    }
+}
