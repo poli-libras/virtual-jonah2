@@ -4,9 +4,10 @@ this.vj2 = this.vj2||{};
     "use strict";
 
     var Shapes = function (){
-        this.load("../resources/shapes.json");
+        vj2.Limb_config.call(this, "../resources/shapes.json");
     };
 
     Shapes.prototype = Object.create(vj2.Limb_config.prototype);
+    Shapes.prototype.constructor = Shapes;
     vj2.Shapes = Shapes;
 }());

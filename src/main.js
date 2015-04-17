@@ -32,7 +32,14 @@ function init()
     camera.position.set(0,1,1);  
     scene.position.set(0,0.5,0);
     camera.lookAt(scene.position);
-    load_model_json('../resources/model/human.js',create_animation);
+
+    var loader = new THREE.JSONLoader();
+    loader.load('../resources/model/human.js',function(geometry)
+    {
+        var human = new vj2.Model(geometry, new THREE.MeshLambertMaterial());
+        human.material.skinning = true;
+        create_animation(human);
+    });
 }
 
 function create_animation(human)
