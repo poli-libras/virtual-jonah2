@@ -50,19 +50,9 @@ function create_animation(human)
     loop();
 }
 
-function rotate_camera()
-{
-    var timer = Date.now() * 0.0005;
-    camera.position.y = 1;
-    camera.position.z = Math.cos( timer ) * 0.5;
-    camera.position.x =  Math.sin( timer ) * 0.5;
-    camera.lookAt( scene.position );   
-}
-
 function loop()
 {
     requestAnimationFrame(loop);
-    //rotate_camera();
     var dt = Date.now() - last_frame_time;
 
     action_upper_limbs.update(dt/1000);

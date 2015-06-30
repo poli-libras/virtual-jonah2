@@ -11,7 +11,7 @@ this.vj2 = this.vj2||{};
         this.start_orientation = orientation;
         this.shape = shape;
 
-        this.bones_moving = new vj2.List();
+        this.bones_moving = [];
 
         this.transitions = [];
     }
@@ -20,21 +20,24 @@ this.vj2 = this.vj2||{};
 
     p.update = function(dt)
     {
-        var itr = this.bones_moving.head;
-        while(itr !== null)
-        {
-            itr.obj.update(dt);
-            if(itr.obj.done) this.bones_moving.remove(itr.obj);
-            itr = itr.next;
-        }
+        this.bones_moving.forEach(function(animated_bone) {
+            animated_bone.update(dt);
+        });
     };
 
     p.start_animation = function()
     {
-        var anim_bone, bone_name;
+        this.bones_moving = [];
+        this.apply_orientation_quartenions();
+        this.apply_location_quartenions();
+        this.apply_shape_quartenions();
+        
+    };
 
+    p.apply_orientation_quartenions = function() {
         var initial_quaternions = {};
         var target_quaternions = {};
+        var bone_name;
 
         // rotate bones to target location and update skeleton
         // keeping a copy of the initial state
@@ -59,16 +62,16 @@ this.vj2 = this.vj2||{};
             var target_orientation = 
                 new THREE.Quaternion().multiplyQuaternions(parent_global.inverse(), global_orientation);
 
-            // compose with target location for this bone in case it exists
+            // compose with target location for this bone in case it exists in location too
             if(this.start_location[bone_name] !== undefined)
             {
                 target_orientation = new THREE.Quaternion().multiplyQuaternions(
-                    loc_bone, new THREE.Quaternion().copy(this.start_location[bone_name]));
+                    target_orientation, new THREE.Quaternion().copy(this.start_location[bone_name]));
             }
             target_quaternions[bone_name] = target_orientation;
         }
 
-        // rollback changes to the skeleton
+        // rollback changes to the skeleton (we had gone to the target only to calculate the target_orientation)
         for(bone_name in initial_quaternions)
         {
             this.model.get_bone(bone_name).quaternion.copy(initial_quaternions[bone_name]);
@@ -79,34 +82,36 @@ this.vj2 = this.vj2||{};
         // apply now calculated local orientation quaternions
         for(bone_name in target_quaternions)
         {
-            anim_bone = this.parent.get_animated_bone(bone_name);
+            var anim_bone = this.parent.get_animated_bone(bone_name);
             if(anim_bone.done)
             {
-                this.bones_moving.add(anim_bone);
+                this.bones_moving.push(anim_bone);
                 anim_bone.animate_to(target_quaternions[bone_name].x, target_quaternions[bone_name].y,
                         target_quaternions[bone_name].z, target_quaternions[bone_name].w, 1.5);
             }
         }
+    };
 
-        // apply location quaternions
-        for(bone_name in this.start_location)
+    p.apply_location_quartenions = function() {
+        for(var bone_name in this.start_location)
         {
-            anim_bone = this.parent.get_animated_bone(bone_name);
+            var anim_bone = this.parent.get_animated_bone(bone_name);
             if(anim_bone.done)
             {
-                this.bones_moving.add(anim_bone); 
+                this.bones_moving.push(anim_bone); 
                 anim_bone.animate_to(this.start_location[bone_name].x, this.start_location[bone_name].y,
                         this.start_location[bone_name].z, this.start_location[bone_name].w, 1.5);
             } 
         }
-        
-        // apply shape quaternions
-        for(bone_name in this.shape)
+    };
+
+    p.apply_shape_quartenions = function() {
+        for(var bone_name in this.shape)
         {
-            anim_bone = this.parent.get_animated_bone(bone_name);
+            var anim_bone = this.parent.get_animated_bone(bone_name);
             if(anim_bone.done)
             {
-                this.bones_moving.add(anim_bone); 
+                this.bones_moving.push(anim_bone); 
                 anim_bone.animate_to(this.shape[bone_name].x, this.shape[bone_name].y,
                         this.shape[bone_name].z, this.shape[bone_name].w, 1.5);
             } 

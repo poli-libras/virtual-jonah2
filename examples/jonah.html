@@ -2,10 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-	<script src="../resources/qunit-1.14.0.js"></script>
 	<script src="../resources/jquery-1.10.2.min.js"></script>
 	<script src="../resources/three.min.js"></script>
+
+    <!-- produção
 	<script src="../build/jonah.min.js"></script>
+    -->
+
+    <!-- desenvolvimento -->
+    <!-- ls -1 src/ | sed  's|.*|<script src="../src/\0"></script>|' -->
+    <script src="../src/action_upper_limbs.js"></script>
+    <script src="../src/animated_bone.js"></script>
+    <script src="../src/config_loader.js"></script>
+    <script src="../src/limb_config.js"></script>
+    <script src="../src/limb_config_loader.js"></script>
+    <script src="../src/list.js"></script>
+    <script src="../src/main.js"></script>
+    <script src="../src/model.js"></script>
+    <script src="../src/sign_config_loader.js"></script>
+    <script src="../src/sign.js"></script>
+    <script src="../src/transition.js"></script>
+
+
     <style>
         .hidden {
             display:none;

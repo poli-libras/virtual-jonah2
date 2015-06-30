@@ -4,3 +4,4 @@ node_modules/*
 resources/model/blender/
 resources/model/makehuman-export/
 todo
+npm-debug.log

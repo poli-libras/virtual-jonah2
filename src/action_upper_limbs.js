@@ -10,24 +10,25 @@ this.vj2 = this.vj2||{};
         this.signs = {};
         this.sign = null;
         
-        var self = this;
+        var locations, orientations, shapes;
         (new vj2.Limb_config_loader()).load('../resources/locations.json', 
-                function (config) {self.locations = config;});
+                function (config) {locations = config;});
         (new vj2.Limb_config_loader()).load('../resources/orientations.json', 
-                function (config) {self.orientations = config;});
+                function (config) {orientations = config;});
         (new vj2.Limb_config_loader()).load('../resources/shapes.json', 
-                function (config) {self.shapes = config;});
+                function (config) {shapes = config;});
 
         // Can be problematic if the other config files are not loaded before this one is
+        var self = this;
         (new vj2.Sign_config_loader()).load('../resources/signs.json', function (config) {
             console.log(config);
             for(var sign_name in config)
             {
                 var sign = config[sign_name];
                 var limb = (sign.left_hand_resting) ? 'right' : 'both';
-                var loc = self.locations.get_config(sign.start_location, limb);
-                var or = self.orientations.get_config(sign.start_orientation, limb);
-                var sp = self.shapes.get_config(sign.shape, limb);
+                var loc = locations.get_config(sign.start_location, limb);
+                var or = orientations.get_config(sign.start_orientation, limb);
+                var sp = shapes.get_config(sign.shape, limb);
                 self.signs[sign_name] = new vj2.Sign(self, self.human_model, loc, or, sp);
             }
         });
@@ -122,19 +123,20 @@ this.vj2 = this.vj2||{};
     };
 
     p.update = function(dt){
-        if(this.sign !== null)
+        if(this.sign !== undefined && this.sign !== null)
         {
             this.sign.update(dt);
         }
     };
 
+    // TODO trocar por "increment_bone_euler" 
     p.set_bone_euler = function(bone_name, x, y, z){
         var anim_bone = this.get_animated_bone(bone_name);
         anim_bone.euler_increment(x, y, z);
     };
 
-    p.set_sign = function(sign){
-        this.sign = this.signs[sign];
+    p.set_sign = function(sign_name){
+        this.sign = this.signs[sign_name];
         this.sign.start_animation();
     };
 

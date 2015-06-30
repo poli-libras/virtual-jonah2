@@ -13,6 +13,7 @@ this.vj2 = this.vj2||{};
 
     p.loadAjaxJSON = function(context, path, callback)
     {
+        // TODO fazer essa chamada usando JQuery
         var xhr = new XMLHttpRequest();
         var length = 0;
 
