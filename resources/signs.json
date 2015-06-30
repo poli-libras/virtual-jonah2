@@ -4,5 +4,23 @@
         "start_location": "BOCA",
         "start_orientation": "INCLINADO_COSTAS",
         "shape": "INDICADOR"
+    },
+    "ENTENDER": {
+        "left_hand_resting": true,
+        "start_location": "TESTA_PERTO",
+        "start_orientation": "INCLINADO",
+        "shape": "B"
+    },
+    "FLOR": {
+        "left_hand_resting": true,
+        "start_location": "BOCA",
+        "start_orientation": "LATERAL",
+        "shape": "F"
+    },
+    "DESCULPAR": {
+        "left_hand_resting": true,
+        "start_location": "QUEIXO",
+        "start_orientation": "COSTAS",
+        "shape": "Y"
     }
 }

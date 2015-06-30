@@ -20,6 +20,7 @@ this.vj2 = this.vj2||{};
 
         // Can be problematic if the other config files are not loaded before this one is
         (new vj2.Sign_config_loader()).load('../resources/signs.json', function (config) {
+            console.log(config);
             for(var sign_name in config)
             {
                 var sign = config[sign_name];
