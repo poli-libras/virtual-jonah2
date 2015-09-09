@@ -34,7 +34,7 @@ function init()
     camera.lookAt(scene.position);
 
     var loader = new THREE.JSONLoader();
-    loader.load('../resources/model/human.js',function(geometry)
+    loader.load('../resources/model/human.js',function(geometry, materials)
     {
         var human = new vj2.Model(geometry, new THREE.MeshLambertMaterial());
         human.material.skinning = true;

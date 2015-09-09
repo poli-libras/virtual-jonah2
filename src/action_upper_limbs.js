@@ -4,37 +4,56 @@ this.vj2 = this.vj2||{};
     "use strict";
 
     function Action_upper_limbs(human_model, scene){
+
         this.human_model = human_model;
         this.scene = scene;
 
         this.signs = {};
         this.sign = null;
-        
-        var locations, orientations, shapes;
-        (new vj2.Limb_config_loader()).load('../resources/locations.json', 
-                function (config) {locations = config;});
-        (new vj2.Limb_config_loader()).load('../resources/orientations.json', 
-                function (config) {orientations = config;});
-        (new vj2.Limb_config_loader()).load('../resources/shapes.json', 
-                function (config) {shapes = config;});
 
-        // Can be problematic if the other config files are not loaded before this one is
+        this.done = 0;
+        this.locations = null;
+        this.orientations = null;
+        this.shapes = null;
+        this.signConfig = null;
+
         var self = this;
-        (new vj2.Sign_config_loader()).load('../resources/signs.json', function (config) {
-            console.log(config);
-            for(var sign_name in config)
-            {
-                var sign = config[sign_name];
-                var limb = (sign.left_hand_resting) ? 'right' : 'both';
-                var loc = locations.get_config(sign.start_location, limb);
-                var or = orientations.get_config(sign.start_orientation, limb);
-                var sp = shapes.get_config(sign.shape, limb);
-                self.signs[sign_name] = new vj2.Sign(self, self.human_model, loc, or, sp);
-            }
-        });
+        (new vj2.Limb_config_loader()).load('../resources/locations.json', 
+                function (config) {self.locations = config; self.done++;});
+        (new vj2.Limb_config_loader()).load('../resources/orientations.json', 
+                function (config) {self.orientations = config; self.done++;});
+        (new vj2.Limb_config_loader()).load('../resources/shapes.json', 
+                function (config) {self.shapes = config; self.done++;});
+
+        (new vj2.Sign_config_loader()).load('../resources/signs.json',
+                function(config) {self.signConfig = config; self.done++;});
+
+        this.init();
     }
 
     var p = Action_upper_limbs.prototype;
+
+    p.init = function() {
+        console.log(this);
+        console.log(this.signConfig);
+        console.log("Done = " + this.done);
+
+        // Wait until all files are loaded
+        if (this.done < 4) {
+            setTimeout($.proxy(this.init, this), 10); // proxy mantém o contexto this em init.
+            return;
+        }
+
+        for(var sign_name in this.signConfig)
+        {
+            var sign = this.signConfig[sign_name];
+            var limb = (sign.left_hand_resting) ? 'right' : 'both';
+            var loc = this.locations.get_config(sign.start_location, limb);
+            var or = this.orientations.get_config(sign.start_orientation, limb);
+            var sp = this.shapes.get_config(sign.shape, limb);
+            this.signs[sign_name] = new vj2.Sign(self, self.human_model, loc, or, sp);
+        }
+    }
 
     p.trace_quaternions = function(){
         this.trace_quaternions_side("LEFT");
