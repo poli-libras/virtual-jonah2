@@ -40,7 +40,7 @@ this.vj2 = this.vj2||{};
 
         // Wait until all files are loaded
         if (this.done < 4) {
-            setTimeout($.proxy(this.init, this), 10); // proxy mantém o contexto this em init.
+            setTimeout($.proxy(this.init, this), 10); // proxy calls init using thias it's context
             return;
         }
 
@@ -51,9 +51,9 @@ this.vj2 = this.vj2||{};
             var loc = this.locations.get_config(sign.start_location, limb);
             var or = this.orientations.get_config(sign.start_orientation, limb);
             var sp = this.shapes.get_config(sign.shape, limb);
-            this.signs[sign_name] = new vj2.Sign(self, self.human_model, loc, or, sp);
+            this.signs[sign_name] = new vj2.Sign(this, this.human_model, loc, or, sp);
         }
-    }
+    };
 
     p.trace_quaternions = function(){
         this.trace_quaternions_side("LEFT");
