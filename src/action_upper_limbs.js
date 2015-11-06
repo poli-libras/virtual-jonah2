@@ -24,7 +24,6 @@ this.vj2 = this.vj2||{};
                 function (config) {self.orientations = config; self.done++;});
         (new vj2.Limb_config_loader()).load('../resources/shapes.json', 
                 function (config) {self.shapes = config; self.done++;});
-
         (new vj2.Sign_config_loader()).load('../resources/signs.json',
                 function(config) {self.signConfig = config; self.done++;});
 
@@ -34,13 +33,10 @@ this.vj2 = this.vj2||{};
     var p = Action_upper_limbs.prototype;
 
     p.init = function() {
-        console.log(this);
-        console.log(this.signConfig);
-        console.log("Done = " + this.done);
 
         // Wait until all files are loaded
         if (this.done < 4) {
-            setTimeout($.proxy(this.init, this), 10); // proxy calls init using thias it's context
+            setTimeout($.proxy(this.init, this), 10); // proxy calls init using this as its context
             return;
         }
 
@@ -158,6 +154,10 @@ this.vj2 = this.vj2||{};
         this.sign = this.signs[sign_name];
         this.sign.start_animation();
     };
+
+    p.get_sign = function(sign_name){
+        return this.signs[sign_name];
+    }
 
     vj2.Action_upper_limbs = Action_upper_limbs;
 }());

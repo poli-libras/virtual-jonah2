@@ -10,6 +10,10 @@ this.vj2 = this.vj2||{};
         this.start_location = location;
         this.start_orientation = orientation;
         this.shape = shape;
+        this.movementPhase = 0;
+
+        this.movementSegments = [];
+
 
         this.bones_moving = [];
 
@@ -18,11 +22,19 @@ this.vj2 = this.vj2||{};
 
     var p = Sign.prototype;
 
-    p.update = function(dt)
-    {
-        this.bones_moving.forEach(function(animated_bone) {
-            animated_bone.update(dt);
-        });
+    p.update = function(dt) {
+        if (this.bones_moving.length > 0) {
+            this.bones_moving.forEach(function (animated_bone, index, array) {
+                if (!animated_bone.done) {
+                    animated_bone.update(dt);
+                } else {
+                    array.splice(index, 1); // remove bone from array
+                }
+            });
+        } else if ( this.movementPhase < this.movementSegments.length) {
+            this.apply_movement_quaternions(this.movementSegments[this.movementPhase]); // inicio do movimento
+            this.movementPhase++;
+        }
     };
 
     p.start_animation = function()
@@ -31,7 +43,6 @@ this.vj2 = this.vj2||{};
         this.apply_orientation_quartenions();
         this.apply_location_quartenions();
         this.apply_shape_quartenions();
-        
     };
 
     p.apply_orientation_quartenions = function() {
@@ -117,6 +128,12 @@ this.vj2 = this.vj2||{};
             } 
         }
     };
+
+    p.apply_movement_quaternions = function(movementSegment) {
+        var anim_bone = this.parent.get_animated_bone("LoArm_R");
+        this.bones_moving.push(anim_bone);
+        anim_bone.euler_animate_to(0, 0, movementSegment.magnitude, 1.5);
+    }
 
     vj2.Sign = Sign;
 }());

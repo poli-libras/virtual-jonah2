@@ -22,5 +22,25 @@
         "start_location": "QUEIXO",
         "start_orientation": "COSTAS",
         "shape": "Y"
+    },
+    "LOSER": {
+        "left_hand_resting": true,
+        "start_location": "TESTA_PERTO",
+        "start_orientation": "FRENTE",
+        "shape": "L"
+    },
+    "TESTE": {
+        "left_hand_resting": true,
+        "start_location": "TESTA_PERTO",
+        "start_orientation": "FRENTE",
+        "shape": "DEFAULT",
+        "hasMovement": true,
+        "segments" : [
+            {
+                "direction": "forward",
+                "magnitude": 100
+            }
+        ]
     }
+
 }

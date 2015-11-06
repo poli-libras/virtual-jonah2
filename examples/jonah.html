@@ -18,6 +18,7 @@
     <script src="../src/limb_config_loader.js"></script>
     <script src="../src/main.js"></script>
     <script src="../src/model.js"></script>
+    <script src="../src/movement_segment.js"></script>
     <script src="../src/sign_config_loader.js"></script>
     <script src="../src/sign.js"></script>
     <script src="../src/transition.js"></script>
@@ -81,7 +82,7 @@
             <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'ESPACO_NEUTRO');">ESPACO NEUTRO</button>
             <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'ESPACO_NEUTRO_CENTRO');">ESPACO NEUTRO CENTRO</button>
             <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'ORELHA');">ORELHA</button>
-            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'OMBRO');">OMBRO</button>
+            <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'OMBRO_ESQ');">OMBRO_ESQ</button>
             <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'QUEIXO');">QUEIXO</button>
             <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'TESTA_PERTO');">TESTA PERTO</button>
             <button onclick="action_upper_limbs.set_hand(document.getElementById('select-main-side').value, 'BOCA');">BOCA</button>
@@ -109,6 +110,15 @@
             <button onclick="action_upper_limbs.set_sign('ENTENDER');">ENTENDER</button>
             <button onclick="action_upper_limbs.set_sign('BOCA');">BOCA</button>
             <button onclick="action_upper_limbs.set_sign('FLOR');">FLOR</button>
+            <button onclick="teste()">TESTE</button>
+            <script type="application/javascript">
+                function teste() {
+                    var sign = action_upper_limbs.get_sign('TESTE');
+                    var segment = new vj2.Movement_segment(0, 200);
+                    sign.movementSegments.push(segment);
+                    action_upper_limbs.set_sign('TESTE');
+                }
+            </script>
         </div>
 
         <div id="right-arm" class="left debug-controls">

@@ -5,6 +5,14 @@
     <title></title>
     <script src="../resources/jquery-1.10.2.min.js"></script>
     <script src="../resources/three.min.js"></script>
+    <script src="../src/model.js"></script>
+    <script src="../src/animated_bone.js"></script>
+    <script src="../src/action_upper_limbs.js"></script>
+    <script src="../src/config_loader.js"></script>
+    <script src="../src/limb_config.js"></script>
+    <script src="../src/limb_config_loader.js"></script>
+    <script src="../src/sign_config_loader.js"></script>
+    <script src="../src/sign.js"></script>
 </head>
 <body>
 
@@ -22,8 +30,9 @@
         var camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
         var clock = new THREE.Clock();
         var scene,renderer;
-        var human;
-
+        var target_bone;
+        var last_frame_time = 0;
+        var action_upper_limbs;
 
         function init()
         {
@@ -50,8 +59,8 @@
                 console.log(materials[0]);
                 var material = new THREE.MeshLambertMaterial();
                 //var material = materials[0];
-                //material.skinning = true;
-                human = new THREE.Mesh(geometry, material);
+                material.skinning = true;
+                var human = new vj2.Model(geometry,material);
                 scene.add(human);
                 create_animation(human);
             });
@@ -60,22 +69,33 @@
 
         function create_animation(human)
         {
-            scene.add(human);
+            target_bone = new vj2.Animated_bone(human, "LoArm_R");
+            //action_upper_limbs = new vj2.Action_upper_limbs(human, scene);
+            last_frame_time = Date.now();
+            target_bone.euler_animate_to(2.4171869676842852e-17, 0.7173560802557392, 0, 0.696706709459357,2000);
             loop();
         }
 
         function loop()
         {
             requestAnimationFrame(loop);
+            var dt = Date.now() - last_frame_time;
+            //human.rotation.y += 0.005;
+            //target_bone.euler_increment(0, 0.1, 0);
 
-            human.rotation.y += 0.005;
+            target_bone.update(dt/1000);
 
+            //action_upper_limbs.update(dt/1000);
 
+            //console.log(target_bone.quaternion);
             renderer.render(scene, camera);
+
+            last_frame_time = Date.now();
         }
 
     </script>
     <div id="container" style="width:1000px; height:500px;"></div>
+    <button onclick="target_bone.euler_increment(0, 0.1, 0);">+</button>
 
 </body>
 </html>
