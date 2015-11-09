@@ -11,7 +11,7 @@ this.vj2 = this.vj2||{};
 
     p.get_bone = function(bone_name){
         var bones = this.skeleton.bones; 
-        // TODO a documentação* fala que existe a propriedade .bones, mas ela não funcionou!
+        // TODO a documentação* fala que existe a propriedade model.bones, mas ela não funcionou! skeleton.bones funciona.
         // * http://threejs.org/docs/#Reference/Objects/SkinnedMesh
         for(var i = 0; i < bones.length; i++)
             if(bones[i].name == bone_name)

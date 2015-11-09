@@ -82,6 +82,7 @@ this.vj2 = this.vj2||{};
     p.interpolate = function(factor){
         if(!this.done)
         {
+            // Aqui é a interpolação linear
             THREE.Quaternion.slerp(this.quaternion_next, this.quaternion_prev,
                     this.quaternion, factor);
             if(factor === 0) this.end_animation();
