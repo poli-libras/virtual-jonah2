@@ -90,12 +90,13 @@ this.vj2 = this.vj2||{};
         }
     };
 
+    // Trace quaternion in JSON format
     p.trace_quaternion = function(label){
         var g = this.human_model.get_bone(label).getWorldQuaternion();
-        console.log(label + " - GLOBAL: (" + g.x + ", " + g.y + ", " + g.z + ", " + g.w + ")");
+        console.log("Global - \"" + label + "\":{ \"x\": " + g.x + ", \"y\": " + g.y + ", \"z\": " + g.z + ", \"w\": " + g.w + "}");
 
         var q = this.human_model.get_bone(label).quaternion;
-        console.log(label + " - LOCAL: (" + q.x + ", " + q.y + ", " + q.z + ", " + q.w + ")");
+        console.log("Local  - \"" + label + "\":{ \"x\": " + q.x + ", \"y\": " + q.y + ", \"z\": " + q.z + ", \"w\": " + q.w + "}");
     };
 
     p.show_edit_controls = function(e){
