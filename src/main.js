@@ -11,6 +11,7 @@ var VIEW_ANGLE = 45,
 var camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
 var clock = new THREE.Clock();
 var scene,renderer;
+var controls;
 var action_upper_limbs;
 
 var last_frame_time = 0;
@@ -29,17 +30,23 @@ function init()
     renderer.setSize(WIDTH, HEIGHT);
     renderer.setClearColor("white",1);
     container.append(renderer.domElement);
-    camera.position.set(0,1,1);  
-    scene.position.set(0,0.5,0);
-    camera.lookAt(scene.position);
 
     var loader = new THREE.JSONLoader();
     loader.load('../resources/model/human.js',function(geometry, materials)
     {
-        var human = new vj2.Model(geometry, new THREE.MeshLambertMaterial());
+        var human = new vj2.Model(geometry, new THREE.MeshLambertMaterial({color: 0xDCA47F}));
         human.material.skinning = true;
         create_animation(human);
     });
+
+    camera.position.set(0,1,1);
+    scene.position.set(0,0.5,0);
+
+    // Add OrbitControls so that we can pan around with the mouse.
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.target.set(scene.position.x,scene.position.y,scene.position.z);
+
+    camera.lookAt(scene.position);
 }
 
 function create_animation(human)
@@ -57,6 +64,7 @@ function loop()
 
     action_upper_limbs.update(dt/1000);
     renderer.render(scene, camera);
+    //controls.update();
 
     last_frame_time = Date.now();
 }
