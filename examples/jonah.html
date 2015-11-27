@@ -19,9 +19,9 @@
     <script src="../src/limb_config_loader.js"></script>
     <script src="../src/main.js"></script>
     <script src="../src/model.js"></script>
-    <script src="../src/movement_segment.js"></script>
     <script src="../src/sign_config_loader.js"></script>
     <script src="../src/sign.js"></script>
+    <script src="../src/symbol.js"></script>
     <script src="../src/transition.js"></script>
 
 
@@ -51,6 +51,670 @@
 </head>
     <body>
         <div id="container" style="width:1000px; height:500px;"></div>
+
+        <!-- Controles posicao -->
+        <div class="positioning-controls">
+            <div id="right-arm" class="left debug-controls">
+                <h3>Right arm</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Wrist</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',-0.1,0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Uparm</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Loarm</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="left-arm" class="left debug-controls">
+                <h3>Left arm</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Wrist</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Uparm</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Loarm</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="left-thumb" class="left debug-controls">
+                <h3>Left thumb</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="left-index" class="left debug-controls">
+                <h3>Left index</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="left-middle" class="left debug-controls">
+                <h3>Left middle</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="left-ring" class="left debug-controls">
+                <h3>Left ring</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="left-pinky" class="left debug-controls">
+                <h3>Left pinky</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="right-thumb" class="left debug-controls">
+                <h3>Right thumb</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="right-index" class="left debug-controls">
+                <h3>Right index</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="right-middle" class="left debug-controls">
+                <h3>Right middle</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="right-ring" class="left debug-controls">
+                <h3>Right ring</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div id="right-pinky" class="left debug-controls">
+                <h3>Right pinky</h3>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-1</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-2</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+                <div class="debug-subcontrols left">
+                    <h3>Phalange-3</h3>
+                    <span class="left">ROLL</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',-0.1, 0,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0.1,0,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">YAW</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0,-0.1,0);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0,0.1,0);">+</button>
+                    </br>
+                    <div class="clear"></div>
+                    <span class="left">PITCH</span>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0,0,-0.1);">-</button>
+                    <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0,0,0.1);">+</button>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <br/>
         <div>
             <h3>Debug</h3>
             <button onclick="action_upper_limbs.toggle_debug();">TOGGLE</button>
@@ -115,671 +779,12 @@
             <script type="application/javascript">
                 function teste() {
                     var sign = action_upper_limbs.get_sign('TESTE');
-                    var segment = new vj2.Movement_segment(0, 200);
-                    sign.movementSegments.push(segment);
+                    //var segment = new vj2.Movement_segment(0, 200);
+                    //sign.movementSegments.push(segment);
                     action_upper_limbs.set_sign('TESTE');
                 }
             </script>
         </div>
 
-        <div id="right-arm" class="left debug-controls">
-            <h3>Right arm</h3>
-            <div class="debug-subcontrols left">
-                <h3>Wrist</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',-0.1,0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Uparm</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Loarm</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="left-arm" class="left debug-controls">
-            <h3>Left arm</h3>
-            <div class="debug-subcontrols left">
-                <h3>Wrist</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Hand_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Uparm</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('UpArm_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Loarm</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('LoArm_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="left-thumb" class="left debug-controls">
-            <h3>Left thumb</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="left-index" class="left debug-controls">
-            <h3>Left index</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="left-middle" class="left debug-controls">
-            <h3>Left middle</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="left-ring" class="left debug-controls">
-            <h3>Left ring</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="left-pinky" class="left debug-controls">
-            <h3>Left pinky</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_L',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="right-thumb" class="left debug-controls">
-            <h3>Right thumb</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-1_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-2_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-1-3_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="right-index" class="left debug-controls">
-            <h3>Right index</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-1_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-2_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-2-3_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="right-middle" class="left debug-controls">
-            <h3>Right middle</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-1_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-2_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-3-3_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="right-ring" class="left debug-controls">
-            <h3>Right ring</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-1_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-2_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-4-3_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
-
-        <div id="right-pinky" class="left debug-controls">
-            <h3>Right pinky</h3>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-1</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-1_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-2</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-2_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-            <div class="debug-subcontrols left">
-                <h3>Phalange-3</h3>
-                <span class="left">ROLL</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',-0.1, 0,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0.1,0,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">YAW</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0,-0.1,0);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0,0.1,0);">+</button>
-                </br>
-                <div class="clear"></div>
-                <span class="left">PITCH</span>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0,0,-0.1);">-</button>
-                <button class="right" onclick="action_upper_limbs.set_bone_euler('Finger-5-3_R',0,0,0.1);">+</button>
-                <div class="clear"></div>
-            </div>
-        </div>
     </body>
 </html>

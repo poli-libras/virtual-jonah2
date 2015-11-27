@@ -36,7 +36,7 @@ this.vj2 = this.vj2||{};
 
         // Wait until all files are loaded
         if (this.done < 4) {
-            setTimeout($.proxy(this.init, this), 10); // proxy calls init using this as its context
+            setTimeout($.proxy(this.init, this), 10); // proxy calls init using 'this' as its context
             return;
         }
 
@@ -44,10 +44,19 @@ this.vj2 = this.vj2||{};
         {
             var sign = this.signConfig[sign_name];
             var limb = (sign.left_hand_resting) ? 'right' : 'both';
-            var loc = this.locations.get_config(sign.start_location, limb);
-            var or = this.orientations.get_config(sign.start_orientation, limb);
-            var sp = this.shapes.get_config(sign.shape, limb);
+            var loc = this.locations.get_config(sign.next_location, limb);
+            var or = this.orientations.get_config(sign.next_orientation, limb);
+            var sp = this.shapes.get_config(sign.next_shape, limb);
             this.signs[sign_name] = new vj2.Sign(this, this.human_model, loc, or, sp);
+
+            // TESTE
+            if (sign_name == 'TESTE') {
+                var loc2 = this.locations.get_config("ESPACO_NEUTRO_PERTO", limb);
+                var or2 = this.orientations.get_config("LATERAL", limb);
+                var sp2 = this.shapes.get_config("Y", limb);
+                var symbol = new vj2.Symbol(this, this.human_model, loc2, or2, sp2);
+                this.signs[sign_name].nextSymbol = symbol;
+            }
         }
     };
 

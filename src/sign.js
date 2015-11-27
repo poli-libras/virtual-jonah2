@@ -9,15 +9,14 @@ this.vj2 = this.vj2||{};
         this.model = model;
         this.start_location = location;
         this.start_orientation = orientation;
-        this.shape = shape;
-        this.movementPhase = 0;
-
-        this.movementSegments = [];
-
-
+        this.start_shape = shape;
+        this.next_location = location;
+        this.next_orientation = orientation;
+        this.next_shape = shape;
+        this.symbolIdx = 0;
         this.bones_moving = [];
 
-        this.transitions = [];
+        this.nextSymbol = null;
     }
 
     var p = Sign.prototype;
@@ -31,15 +30,27 @@ this.vj2 = this.vj2||{};
                     array.splice(index, 1); // remove bone from array
                 }
             });
-        } else if ( this.movementPhase < this.movementSegments.length) {
-            this.apply_movement_quaternions(this.movementSegments[this.movementPhase]); // inicio do movimento
-            this.movementPhase++;
+        } else { // Fim de uma etapa do movimento
+            if (this.symbolIdx == 0 && this.nextSymbol != null) {
+                console.log("Next symbol");
+                this.next_location = this.nextSymbol.location;
+                this.next_orientation = this.nextSymbol.orientation;
+                this.next_shape = this.nextSymbol.shape;
+                this.symbolIdx++;
+                this.apply_orientation_quartenions();
+                this.apply_location_quartenions();
+                this.apply_shape_quartenions();
+            }
         }
     };
 
     p.start_animation = function()
     {
         this.bones_moving = [];
+        this.symbolIdx = 0;
+        this.next_location = this.start_location;
+        this.next_orientation = this.start_orientation;
+        this.next_shape = this.start_shape;
         this.apply_orientation_quartenions();
         this.apply_location_quartenions();
         this.apply_shape_quartenions();
@@ -52,32 +63,32 @@ this.vj2 = this.vj2||{};
 
         // rotate bones to target location and update skeleton
         // keeping a copy of the initial state
-        for(bone_name in this.start_location)
+        for(bone_name in this.next_location)
         {
             var target_bone = this.model.get_bone(bone_name);
-            var target_location = this.start_location[bone_name];
+            var target_location = this.next_location[bone_name];
             initial_quaternions[bone_name] = target_bone.quaternion.clone();
             target_bone.quaternion.copy(target_location);
         }
         this.parent.scene.updateMatrixWorld(true);
         this.model.skeleton.update();
         
-        for(bone_name in this.start_orientation)
+        for(bone_name in this.next_orientation)
         {
             // at target location, calculate the local quaternion for the target global orientation
             // and store it for later interpolation
             var global_orientation = 
-                new THREE.Quaternion().copy(this.start_orientation[bone_name]);
-            var parent_global = 
+                new THREE.Quaternion().copy(this.next_orientation[bone_name]);
+            var parent_global =
                 this.model.get_bone(bone_name).parent.getWorldQuaternion().clone();
             var target_orientation = 
                 new THREE.Quaternion().multiplyQuaternions(parent_global.inverse(), global_orientation);
 
             // compose with target location for this bone in case it exists in location too
-            if(this.start_location[bone_name] !== undefined)
+            if(this.next_location[bone_name] !== undefined)
             {
                 target_orientation = new THREE.Quaternion().multiplyQuaternions(
-                    target_orientation, new THREE.Quaternion().copy(this.start_location[bone_name]));
+                    target_orientation, new THREE.Quaternion().copy(this.next_location[bone_name]));
             }
             target_quaternions[bone_name] = target_orientation;
         }
@@ -104,36 +115,30 @@ this.vj2 = this.vj2||{};
     };
 
     p.apply_location_quartenions = function() {
-        for(var bone_name in this.start_location)
+        for(var bone_name in this.next_location)
         {
             var anim_bone = this.parent.get_animated_bone(bone_name);
             if(anim_bone.done)
             {
                 this.bones_moving.push(anim_bone); 
-                anim_bone.animate_to(this.start_location[bone_name].x, this.start_location[bone_name].y,
-                        this.start_location[bone_name].z, this.start_location[bone_name].w, 1.5);
+                anim_bone.animate_to(this.next_location[bone_name].x, this.next_location[bone_name].y,
+                        this.next_location[bone_name].z, this.next_location[bone_name].w, 1.5);
             } 
         }
     };
 
     p.apply_shape_quartenions = function() {
-        for(var bone_name in this.shape)
+        for(var bone_name in this.next_shape)
         {
             var anim_bone = this.parent.get_animated_bone(bone_name);
             if(anim_bone.done)
             {
                 this.bones_moving.push(anim_bone); 
-                anim_bone.animate_to(this.shape[bone_name].x, this.shape[bone_name].y,
-                        this.shape[bone_name].z, this.shape[bone_name].w, 1.5);
+                anim_bone.animate_to(this.next_shape[bone_name].x, this.next_shape[bone_name].y,
+                        this.next_shape[bone_name].z, this.next_shape[bone_name].w, 1.5);
             } 
         }
     };
-
-    p.apply_movement_quaternions = function(movementSegment) {
-        var anim_bone = this.parent.get_animated_bone("LoArm_R");
-        this.bones_moving.push(anim_bone);
-        anim_bone.euler_animate_to(0, 0, movementSegment.magnitude, 1.5);
-    }
 
     vj2.Sign = Sign;
 }());
