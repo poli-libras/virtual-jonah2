@@ -1,47 +1,67 @@
 {
-    "BOCA": {
-        "left_hand_resting": true,
-        "next_location": "BOCA",
-        "next_orientation": "INCLINADO_COSTAS",
-        "next_shape": "INDICADOR"
-    },
-    "ENTENDER": {
-        "left_hand_resting": true,
-        "next_location": "TESTA_PERTO",
-        "next_orientation": "INCLINADO",
-        "next_shape": "B"
-    },
-    "FLOR": {
-        "left_hand_resting": true,
-        "next_location": "BOCA",
-        "next_orientation": "LATERAL",
-        "next_shape": "F"
-    },
-    "DESCULPAR": {
-        "left_hand_resting": true,
-        "next_location": "QUEIXO",
-        "next_orientation": "COSTAS",
-        "next_shape": "Y"
-    },
-    "LOSER": {
-        "left_hand_resting": true,
-        "next_location": "TESTA_PERTO",
-        "next_orientation": "FRENTE",
-        "next_shape": "L"
-    },
-    "TESTE": {
-        "left_hand_resting": true,
-        "next_location": "BOCA",
-        "next_orientation": "LATERAL",
-        "next_shape": "Y",
-        "hasMovement": true,
-        "symbols" : [
-            {
-                "location": "ESPACO_NEUTRO",
-                "orientation": "LATERAL",
-                "next_shape": "Y"
-            }
-        ]
-    }
-
+  "BOCA": {
+    "left_hand_resting": true,
+    "symbols": [
+      {
+        "location": "BOCA",
+        "orientation": "INCLINADO_COSTAS",
+        "shape": "INDICADOR"
+      }
+    ]
+  },
+  "ENTENDER": {
+    "left_hand_resting": true,
+    "symbols": [
+      {
+        "location": "TESTA_PERTO",
+        "orientation": "INCLINADO",
+        "shape": "B"
+      }
+    ]
+  },
+  "FLOR": {
+    "left_hand_resting": true,
+    "symbols": [
+      {
+        "location": "BOCA",
+        "orientation": "LATERAL",
+        "shape": "F"
+      }
+    ]
+  },
+  "DESCULPAR": {
+    "left_hand_resting": true,
+    "symbols": [
+      {
+        "location": "QUEIXO",
+        "orientation": "COSTAS",
+        "shape": "Y"
+      }
+    ]
+  },
+  "LOSER": {
+    "left_hand_resting": true,
+    "symbols": [
+      {
+        "location": "TESTA_PERTO",
+        "orientation": "FRENTE",
+        "shape": "L"
+      }
+    ]
+  },
+  "TESTE": {
+    "left_hand_resting": true,
+    "symbols": [
+      {
+        "location": "BOCA",
+        "orientation": "LATERAL",
+        "shape": "Y"
+      },
+      {
+        "location": "ESPACO_NEUTRO",
+        "orientation": "LATERAL",
+        "shape": "Y"
+      }
+    ]
+  }
 }

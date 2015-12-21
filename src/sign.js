@@ -3,20 +3,19 @@ this.vj2 = this.vj2||{};
 (function () {
     "use strict";
     
-    function Sign(parent, model, location, orientation, shape)
+    function Sign(parent, model, symbols)
     {
         this.parent = parent;
         this.model = model;
-        this.start_location = location;
-        this.start_orientation = orientation;
-        this.start_shape = shape;
-        this.next_location = location;
-        this.next_orientation = orientation;
-        this.next_shape = shape;
-        this.symbolIdx = 0;
-        this.bones_moving = [];
+        this.symbols = symbols;
 
-        this.nextSymbol = null;
+        this.symbolIdx = 0;
+        if (symbols.length > 0) {
+            this.next_location = symbols[this.symbolIdx].location;
+            this.next_orientation = symbols[this.symbolIdx].orientation;
+            this.next_shape = symbols[this.symbolIdx].shape;
+        }
+        this.bones_moving = [];
     }
 
     var p = Sign.prototype;
@@ -31,12 +30,8 @@ this.vj2 = this.vj2||{};
                 }
             });
         } else { // Fim de uma etapa do movimento
-            if (this.symbolIdx == 0 && this.nextSymbol != null) {
-                console.log("Next symbol");
-                this.next_location = this.nextSymbol.location;
-                this.next_orientation = this.nextSymbol.orientation;
-                this.next_shape = this.nextSymbol.shape;
-                this.symbolIdx++;
+            if (this.updateNextSymbol()) {
+                console.log("Symbol " + this.symbolIdx);
                 this.apply_orientation_quartenions();
                 this.apply_location_quartenions();
                 this.apply_shape_quartenions();
@@ -44,13 +39,29 @@ this.vj2 = this.vj2||{};
         }
     };
 
+    /**
+     * Prepara o sinal para o próximo simbolo.
+     * @returns {boolean} true se existe próximo símbolo; falso caso contrário.
+     */
+    p.updateNextSymbol = function()
+    {
+        if (this.symbolIdx < this.symbols.length - 1) { // Se tem mais etapas do movimento
+            this.symbolIdx++;
+            this.next_location = this.symbols[this.symbolIdx].location;
+            this.next_orientation = this.symbols[this.symbolIdx].orientation;
+            this.next_shape = this.symbols[this.symbolIdx].shape;
+            return true;
+        }
+        return false;
+    }
+
     p.start_animation = function()
     {
         this.bones_moving = [];
         this.symbolIdx = 0;
-        this.next_location = this.start_location;
-        this.next_orientation = this.start_orientation;
-        this.next_shape = this.start_shape;
+        this.next_location = this.symbols[this.symbolIdx].location;
+        this.next_orientation = this.symbols[this.symbolIdx].orientation;
+        this.next_shape = this.symbols[this.symbolIdx].shape;
         this.apply_orientation_quartenions();
         this.apply_location_quartenions();
         this.apply_shape_quartenions();

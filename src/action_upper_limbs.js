@@ -43,20 +43,16 @@ this.vj2 = this.vj2||{};
         for(var sign_name in this.signConfig)
         {
             var sign = this.signConfig[sign_name];
+            var symbols = [];
             var limb = (sign.left_hand_resting) ? 'right' : 'both';
-            var loc = this.locations.get_config(sign.next_location, limb);
-            var or = this.orientations.get_config(sign.next_orientation, limb);
-            var sp = this.shapes.get_config(sign.next_shape, limb);
-            this.signs[sign_name] = new vj2.Sign(this, this.human_model, loc, or, sp);
-
-            // TESTE
-            if (sign_name == 'TESTE') {
-                var loc2 = this.locations.get_config("ESPACO_NEUTRO_PERTO", limb);
-                var or2 = this.orientations.get_config("LATERAL", limb);
-                var sp2 = this.shapes.get_config("Y", limb);
-                var symbol = new vj2.Symbol(this, this.human_model, loc2, or2, sp2);
-                this.signs[sign_name].nextSymbol = symbol;
+            for (var i = 0; i < sign.symbols.length; i++) {
+                var symbolConfig = sign.symbols[i];
+                var loc = this.locations.get_config(symbolConfig.location, limb);
+                var or = this.orientations.get_config(symbolConfig.orientation, limb);
+                var sp = this.shapes.get_config(symbolConfig.shape, limb);
+                symbols.push(new vj2.Symbol(loc, or, sp));
             }
+            this.signs[sign_name] = new vj2.Sign(this, this.human_model, symbols);
         }
     };
 

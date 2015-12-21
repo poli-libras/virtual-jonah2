@@ -34,7 +34,7 @@ function init()
     var loader = new THREE.JSONLoader();
     loader.load('../resources/model/human.js',function(geometry, materials)
     {
-        var human = new vj2.Model(geometry, new THREE.MeshLambertMaterial({color: 0xDCA47F}));
+        var human = new vj2.Model(geometry, new THREE.MeshLambertMaterial(/*{color: 0xDCA47F}*/));
         human.material.skinning = true;
         create_animation(human);
     });

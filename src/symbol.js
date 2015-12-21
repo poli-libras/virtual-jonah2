@@ -3,10 +3,8 @@ this.vj2 = this.vj2||{};
 (function () {
     "use strict";
 
-    function Symbol(parent, model, location, orientation, shape)
+    function Symbol(location, orientation, shape)
     {
-        this.parent = parent;
-        this.model = model;
         this.location = location;
         this.orientation = orientation;
         this.shape = shape;
