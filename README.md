@@ -3,6 +3,8 @@ virtual-jonah2
 
 Portando Virtual Jonah para o ThreeJS
 
+Live preview: http://poli-libras.github.io/virtual-jonah2/examples/jonah.html
+
 Testes
 -------------
 
